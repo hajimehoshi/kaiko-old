@@ -8,7 +8,7 @@
 #include <iostream>
 
 namespace Kaiko {
-namespace IPC {
+namespace Tests {
 
 using namespace Kaiko::IPC;
 
