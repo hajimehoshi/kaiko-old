@@ -70,7 +70,9 @@ SimpleSession::Receive() {
     goto Failed;
   }
   const std::string& receivedData = this->pimpl->transportClient->GetLastReceivedData();
-  this->pimpl->bufferedChars.insert(this->pimpl->bufferedChars.end(), receivedData.begin(), receivedData.end());
+  this->pimpl->bufferedChars.insert(this->pimpl->bufferedChars.end(),
+                                    receivedData.begin(),
+                                    receivedData.end());
   while (true) {
     if (this->pimpl->bufferedChars.empty()) {
       this->pimpl->lastReceivedData.clear();
@@ -131,8 +133,8 @@ SimpleSession::Receive() {
           this->pimpl->lastReceivedData.clear();
           return true;
         }
-        std::deque<char>::const_iterator dataBegin = this->pimpl->bufferedChars.begin();
-        std::deque<char>::const_iterator dataEnd   = this->pimpl->bufferedChars.begin() + this->pimpl->restLengthToRead;
+        auto dataBegin = this->pimpl->bufferedChars.begin();
+        auto dataEnd   = this->pimpl->bufferedChars.begin() + this->pimpl->restLengthToRead;
         this->pimpl->lastReceivedData.swap(std::string(dataBegin, dataEnd));
         this->pimpl->bufferedChars.erase(dataBegin, dataEnd);
         this->pimpl->receivingState = ReceivingStateInit;

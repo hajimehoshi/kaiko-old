@@ -34,11 +34,11 @@ StorageServer::Run(boost::shared_ptr<IPC::ITransportServer> transportServer,
       // TODO: logging
       break;
     }
-    boost::shared_ptr<IPC::ITransportClient> transportClient = transportServer->GetLastAcceptedClient();
+    auto transportClient = transportServer->GetLastAcceptedClient();
     if (transportClient) {
       this->pimpl->sessions.insert(sessionFactory->Create(transportClient));
     }
-    Impl::Sessions::iterator it = this->pimpl->sessions.begin();
+    auto it = this->pimpl->sessions.begin();
     while (it != this->pimpl->sessions.end()) {
       boost::shared_ptr<IPC::ISession> session = *it;
       if (!session->Receive()) {

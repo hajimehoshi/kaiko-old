@@ -16,7 +16,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_Scan_Comment) {
       "//baz";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeIdentifier,
                       e->GetCurrent().GetType());  
@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_Scan_Comment) {
       " */  grault";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeIdentifier,
                       e->GetCurrent().GetType());  
@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_Characters) {
     std::string str = "& && & &&";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeAmpersandSign,
                       e->GetCurrent().GetType());
@@ -93,7 +93,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_Characters) {
     std::string str = "| || | ||";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeVerticalLine,
                       e->GetCurrent().GetType());
@@ -120,7 +120,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_Characters) {
     std::string str = "< << <= < << <=";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeLessThanSign,
                       e->GetCurrent().GetType());
@@ -157,7 +157,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_Characters) {
     std::string str = "= == = ==";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeEqualsSign,
                       e->GetCurrent().GetType());
@@ -184,7 +184,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_Characters) {
     std::string str = "> >= >> >>> > >= >> >>>";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeGreaterThanSign,
                       e->GetCurrent().GetType());
@@ -233,7 +233,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_Identifier) {
   std::string str = "foo";
   ScriptStream scriptStream(str);
   Lexer lexer(scriptStream);
-  boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+  auto e = lexer.GetEnumerator();
   BOOST_CHECK_EQUAL(true, e->MoveNext());
   BOOST_CHECK_EQUAL(TokenTypeIdentifier,
                     e->GetCurrent().GetType());
@@ -249,7 +249,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_Scan_Integer) {
 
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeIntegerLiteral,
                       e->GetCurrent().GetType());
@@ -262,7 +262,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_Scan_Integer) {
     std::string str = "0_";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeIntegerLiteral,
                       e->GetCurrent().GetType());
@@ -275,7 +275,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_Scan_Integer) {
     std::string str = "123456";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeIntegerLiteral,
                       e->GetCurrent().GetType());
@@ -288,7 +288,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_Scan_Integer) {
     std::string str = "123_456_";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeIntegerLiteral,
                       e->GetCurrent().GetType());
@@ -301,7 +301,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_Scan_Integer) {
     std::string str = "0b010101";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeIntegerLiteral,
                       e->GetCurrent().GetType());
@@ -314,7 +314,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_Scan_Integer) {
     std::string str = "0b_010_101_";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeIntegerLiteral,
                       e->GetCurrent().GetType());
@@ -327,7 +327,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_Scan_Integer) {
     std::string str = "0B010101";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeIntegerLiteral,
                       e->GetCurrent().GetType());
@@ -340,7 +340,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_Scan_Integer) {
     std::string str = "0b12";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeIntegerLiteral,
                       e->GetCurrent().GetType());
@@ -359,7 +359,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_Scan_Integer) {
     std::string str = "0123456";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeIntegerLiteral,
                       e->GetCurrent().GetType());
@@ -372,7 +372,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_Scan_Integer) {
     std::string str = "0_123_456";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeIntegerLiteral,
                       e->GetCurrent().GetType());
@@ -385,7 +385,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_Scan_Integer) {
     std::string str = "08";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeIntegerLiteral,
                       e->GetCurrent().GetType());
@@ -404,7 +404,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_Scan_Integer) {
     std::string str = "0x_c0F_fEe";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeIntegerLiteral,
                       e->GetCurrent().GetType());
@@ -417,7 +417,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_Scan_Integer) {
     std::string str = "0X_c0F_fEe";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeIntegerLiteral,
                       e->GetCurrent().GetType());
@@ -430,7 +430,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_Scan_Integer) {
     std::string str = "0xfg";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeIntegerLiteral,
                       e->GetCurrent().GetType());
@@ -453,7 +453,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_String) {
     std::string str = "\"string literal\"";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeStringLiteral,
                       e->GetCurrent().GetType());
@@ -468,7 +468,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_String) {
     std::string str = "\"\xE6\x96\x87\xE5\xAD\x97\xE5\x88\x97\"";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeStringLiteral,
                       e->GetCurrent().GetType());
@@ -485,7 +485,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_String) {
     std::string str = "\"\\\\\\\"\\'\\a\\b\\f\\n\\r\\t\\v\"";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeStringLiteral,
                       e->GetCurrent().GetType());
@@ -500,7 +500,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_String) {
     std::string str = "\"\\xc0\\x0f\\xEE \\xabc \\x1z\"";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeStringLiteral,
                       e->GetCurrent().GetType());
@@ -515,7 +515,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_String) {
     std::string str = "\"\\31\\41\\592\\653\"";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeStringLiteral,
                       e->GetCurrent().GetType());
@@ -530,7 +530,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_String) {
     std::string str = "\"\\u002f \\u00A9 \\u0192 \\u3042\"";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeStringLiteral,
                       e->GetCurrent().GetType());
@@ -550,7 +550,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_String) {
       "\\u306F\\n\"";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeStringLiteral,
                       e->GetCurrent().GetType());
@@ -572,7 +572,7 @@ BOOST_AUTO_TEST_CASE(Script_Lexer_Keyword) {
     std::string str = "for For";
     ScriptStream scriptStream(str);
     Lexer lexer(scriptStream);
-    boost::shared_ptr< Util::IEnumerator<Token> > e = lexer.GetEnumerator();
+    auto e = lexer.GetEnumerator();
     BOOST_CHECK_EQUAL(true, e->MoveNext());
     BOOST_CHECK_EQUAL(TokenTypeKeywordFor,
                       e->GetCurrent().GetType());

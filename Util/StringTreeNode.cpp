@@ -51,7 +51,7 @@ StringTreeNode::ToString() const {
   result.append(Serialization::LengthToBytes(this->GetKey().size()));
   result.append(this->GetKey());
   result.append(Serialization::LengthToBytes(this->pimpl->childNodes.size()));
-  for (Impl::Nodes::const_iterator it = this->pimpl->childNodes.begin();
+  for (auto it = this->pimpl->childNodes.begin();
        it != this->pimpl->childNodes.end();
        ++it) {
     result.append((*it)->ToString());

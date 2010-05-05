@@ -21,7 +21,7 @@ BOOST_AUTO_TEST_CASE(Util_ContainerEnumerable_Vector) {
     items.push_back(1);
     items.push_back(5);
     {
-      boost::shared_ptr< IEnumerator<int> > e = containerEnumerable.GetEnumerator();
+      auto e = containerEnumerable.GetEnumerator();
       BOOST_CHECK(e.get());
       BOOST_CHECK_EQUAL(true, e->MoveNext());
       BOOST_CHECK_EQUAL(3, e->GetCurrent());
@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_CASE(Util_ContainerEnumerable_Vector) {
     }
     items.push_back(9);
     {
-      boost::shared_ptr< IEnumerator<int> > e = containerEnumerable.GetEnumerator();
+      auto e = containerEnumerable.GetEnumerator();
       BOOST_CHECK(e.get());
       BOOST_CHECK_EQUAL(true, e->MoveNext());
       BOOST_CHECK_EQUAL(3, e->GetCurrent());
@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_CASE(Util_ContainerEnumerable_List) {
     items.push_back(1);
     items.push_back(5);
     {
-      boost::shared_ptr< IEnumerator<int> > e = containerEnumerable.GetEnumerator();
+      auto e = containerEnumerable.GetEnumerator();
       BOOST_CHECK(e.get());
       BOOST_CHECK_EQUAL(true, e->MoveNext());
       BOOST_CHECK_EQUAL(3, e->GetCurrent());
@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE(Util_ContainerEnumerable_List) {
     }
     items.push_back(9);
     {
-      boost::shared_ptr< IEnumerator<int> > e = containerEnumerable.GetEnumerator();
+      auto e = containerEnumerable.GetEnumerator();
       BOOST_CHECK(e.get());
       BOOST_CHECK_EQUAL(true, e->MoveNext());
       BOOST_CHECK_EQUAL(3, e->GetCurrent());
