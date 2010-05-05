@@ -11,7 +11,7 @@ template<class T>
 class IEnumerable {
 public:
   virtual ~IEnumerable() { }
-  virtual boost::shared_ptr< IEnumerator<T> > GetEnumerator() const = 0;
+  virtual boost::shared_ptr<IEnumerator<T>> GetEnumerator() const = 0;
 };
 
 }

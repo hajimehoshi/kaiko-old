@@ -16,7 +16,7 @@ public:
   static boost::shared_ptr<StringTreeNode> CreateFromString(const std::string& str);
   explicit StringTreeNode(const std::string& key);
   void AddChildNode(const std::string& key);
-  const IEnumerable< boost::shared_ptr<StringTreeNode> >& GetChildNodes() const;
+  const IEnumerable<boost::shared_ptr<StringTreeNode>>& GetChildNodes() const;
   const std::string& GetKey() const;
   std::string ToString() const;
 private:

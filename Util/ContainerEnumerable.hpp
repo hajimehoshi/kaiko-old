@@ -27,7 +27,7 @@ private:
   };
 public:
   ContainerEnumerable(const TContainer& container);
-  boost::shared_ptr< IEnumerator<typename TContainer::value_type> > GetEnumerator() const;
+  boost::shared_ptr<IEnumerator<typename TContainer::value_type>> GetEnumerator() const;
 private:
   const TContainer& container;
 };
@@ -38,7 +38,7 @@ ContainerEnumerable<TContainer>::ContainerEnumerable(const TContainer& container
 }
 
 template<class TContainer>
-boost::shared_ptr< IEnumerator<typename TContainer::value_type> >
+boost::shared_ptr<IEnumerator<typename TContainer::value_type>>
 ContainerEnumerable<TContainer>::GetEnumerator() const {
   return boost::shared_ptr<Enumerator>(new Enumerator(container.begin(), container.end()));
 }

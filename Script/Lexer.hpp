@@ -18,7 +18,7 @@ class Lexer : public Util::IEnumerable<Token>,
   friend class LexerEnumerator;
 public:
   explicit Lexer(IScriptStream& scriptStream);
-  boost::shared_ptr< Util::IEnumerator<Token> > GetEnumerator() const;
+  boost::shared_ptr<Util::IEnumerator<Token>> GetEnumerator() const;
 private:
   std::vector<const Token> tokens;
 };

@@ -8,6 +8,7 @@
 static class Finalizer {
 public:
   ~Finalizer() {
+    std::cout.flush();
     std::cin.get();
   }
 } finalizer;

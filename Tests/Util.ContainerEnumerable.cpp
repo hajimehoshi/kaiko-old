@@ -14,7 +14,7 @@ using namespace Kaiko::Util;
 BOOST_AUTO_TEST_CASE(Util_ContainerEnumerable_Vector) {
   {
     std::vector<int> items;
-    ContainerEnumerable< std::vector<int> > containerEnumerable(items);
+    ContainerEnumerable<std::vector<int>> containerEnumerable(items);
     items.push_back(3);
     items.push_back(1);
     items.push_back(4);
@@ -59,7 +59,7 @@ BOOST_AUTO_TEST_CASE(Util_ContainerEnumerable_Vector) {
 BOOST_AUTO_TEST_CASE(Util_ContainerEnumerable_List) {
   {
     std::list<int> items;
-    ContainerEnumerable< std::list<int> > containerEnumerable(items);
+    ContainerEnumerable<std::list<int>> containerEnumerable(items);
     items.push_back(3);
     items.push_back(1);
     items.push_back(4);

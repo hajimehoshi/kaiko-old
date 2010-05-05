@@ -13,7 +13,7 @@ namespace Kaiko {
 namespace Storage {
 
 struct StorageServer::Impl {
-  typedef boost::unordered_set< boost::shared_ptr<IPC::ISession> > Sessions;
+  typedef boost::unordered_set<boost::shared_ptr<IPC::ISession>> Sessions;
   Sessions sessions;
 };
 
