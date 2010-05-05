@@ -53,7 +53,7 @@ SocketServer::Accept() {
   if (::ioctlsocket(this->pimpl->socket, FIONBIO, &val)) {
     throw SocketException(__FILE__, __LINE__);
   }
-  SOCKET clientSocket = ::accept(this->pimpl->socket, 0, 0);
+  SOCKET clientSocket = ::accept(this->pimpl->socket, nullptr, nullptr);
   if (clientSocket != INVALID_SOCKET) {
     this->pimpl->lastAcceptedSocketClient.reset(new SocketClient(clientSocket));
   } else {

@@ -27,12 +27,12 @@ NamedPipe::NamedPipe(const std::string& name, bool isServer)
                                             4096,
                                             4096,
                                             5000,
-                                            0);
+                                            nullptr);
   } else {
     this->pimpl->handle = ::CreateFile(pipeNameW.c_str(),
                                        GENERIC_READ | GENERIC_WRITE,
                                        0,
-                                       0,
+                                       nullptr,
                                        OPEN_EXISTING,
                                        SECURITY_SQOS_PRESENT | SECURITY_IDENTIFICATION,
                                        0);
@@ -59,7 +59,7 @@ NamedPipe::Connect() {
   if (this->pimpl->handle == INVALID_HANDLE_VALUE) {
     return false;
   }
-  if (!::ConnectNamedPipe(this->pimpl->handle, 0)) {
+  if (!::ConnectNamedPipe(this->pimpl->handle, nullptr)) {
     throw Util::SystemException(__FILE__, __LINE__);
   }
   return true;
@@ -93,7 +93,7 @@ NamedPipe::Receive() {
                   buffer,
                   sizeof(buffer) / sizeof(buffer[0]),
                   &numOfBytesRead,
-                  0)) {
+                  nullptr)) {
     throw Util::SystemException(__FILE__, __LINE__);
   }
   if (numOfBytesRead) {
@@ -113,8 +113,8 @@ NamedPipe::Send(const std::string& data) {
   if (!::WriteFile(this->pimpl->handle,
                    data.c_str(),
                    data.size(),
-                   0,
-                   0)) {
+                   nullptr,
+                   nullptr)) {
     throw Util::SystemException(__FILE__, __LINE__);
   }
   return true;
