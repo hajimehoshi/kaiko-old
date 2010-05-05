@@ -1,0 +1,11 @@
+*~
+*.old
+*.opensdf
+*.sdf
+*.suo
+*.user
+_UpgradeReport_Files
+ipch
+Debug
+Release
+UpgradeLog.XML

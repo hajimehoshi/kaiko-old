@@ -1,0 +1,4 @@
+* How to build (Visual C++ 2010)
+
+- Set the environment variable "BoostDir".
+- Run the compiler with Kaiko.sln file.
