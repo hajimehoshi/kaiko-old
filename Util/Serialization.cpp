@@ -9,7 +9,7 @@ std::string
 Serialization::LengthToBytes(int length) {
   std::deque<char> bytes;
   bytes.push_front(static_cast<char>(length & 0x7f));
-  while (true) {
+  for (;;) {
     length >>= 7;
     if (!length) {
       break;

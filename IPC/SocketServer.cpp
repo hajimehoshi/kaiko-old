@@ -17,7 +17,7 @@ struct SocketServer::Impl {
     sockaddr_in addr = { 0 };
     addr.sin_family      = AF_INET;
     addr.sin_addr.s_addr = ::htonl(INADDR_ANY);
-    addr.sin_port        = ::htons(port);
+    addr.sin_port        = ::htons(static_cast<unsigned short>(port));
     if (::bind(this->socket, (sockaddr *)&addr, sizeof(addr))) {
       throw SocketException(__FILE__, __LINE__);
     }

@@ -22,7 +22,7 @@ SocketClient::SocketClient(const std::string& ip, int port)
   sockaddr_in addr = { 0 };
   addr.sin_family      = AF_INET;
   addr.sin_addr.s_addr = ::inet_addr(ip.c_str());
-  addr.sin_port        = ::htons(port);
+  addr.sin_port        = ::htons(static_cast<unsigned short>(port));
   if (::connect(this->pimpl->socket, (sockaddr *)&addr, sizeof(addr))) {
     throw SocketException(__FILE__, __LINE__);
   }
@@ -103,7 +103,7 @@ SocketClient::Send(const std::string& data) {
       throw SocketException(__FILE__, __LINE__);
     }
   default:
-    if (data.size() != length) {
+    if (static_cast<int>(data.size()) != length) {
       throw SocketException(__FILE__, __LINE__);
     }
     return true;

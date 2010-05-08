@@ -20,7 +20,7 @@ struct StringTreeNode::Impl {
 };
 
 std::shared_ptr<StringTreeNode>
-StringTreeNode::CreateFromString(const std::string& str) {
+StringTreeNode::CreateFromString(const std::string&) {
   return std::shared_ptr<StringTreeNode>();
 }
 

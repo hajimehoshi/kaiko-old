@@ -25,7 +25,7 @@ void
 StorageServer::Run(std::shared_ptr<IPC::ITransportServer> transportServer,
                    std::shared_ptr<IPC::ISessionFactory> sessionFactory) {
   assert(transportServer);
-  while (true) {
+  for (;;) {
     try {
       if (!transportServer->Accept()) {
         break;

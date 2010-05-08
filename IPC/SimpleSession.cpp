@@ -72,7 +72,7 @@ SimpleSession::Receive() {
   this->pimpl->bufferedChars.insert(this->pimpl->bufferedChars.end(),
                                     receivedData.begin(),
                                     receivedData.end());
-  while (true) {
+  for (;;) {
     if (this->pimpl->bufferedChars.empty()) {
       this->pimpl->lastReceivedData.clear();
       return true;

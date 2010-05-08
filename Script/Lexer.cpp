@@ -46,7 +46,7 @@ public:
   virtual bool MoveNext();
 private:
   const Lexer& lexer;
-  std::vector<const Token>::size_type index;
+  int index;
 };
 
 Lexer::Lexer(IScriptStream& scriptStream) {
@@ -217,7 +217,7 @@ Lexer::Lexer(IScriptStream& scriptStream) {
           continue;
         case '*':
           // multi-line comment
-          while (true) {
+          for (;;) {
             if (!scriptStream.MoveNext()) {
               throw "multi-line comment meets end of script";
             }
@@ -340,7 +340,7 @@ Lexer::Lexer(IScriptStream& scriptStream) {
         std::string tokenStr;
         const int startLineNo = scriptStream.GetCurrentLineNo();
         const int startColumn = scriptStream.GetCurrentColumn();
-        while (true) {
+        for (;;) {
           if (!scriptStream.MoveNext()) {
             throw "unterminated string meets end of script";
           }
@@ -439,12 +439,17 @@ Lexer::Lexer(IScriptStream& scriptStream) {
                 if (unicodeChar <= 0x007f) {
                   tokenStr += unicodeChar & 0x7f;
                 } else if (unicodeChar <= 0x07ff) {
-                  tokenStr += ((unicodeChar & 0x07c0) >> 6) | 0xc0;
-                  tokenStr += ((unicodeChar & 0x003f)     ) | 0x80;
+                  tokenStr +=
+                    static_cast<char>(((unicodeChar & 0x07c0) >> 6) | 0xc0);
+                  tokenStr +=
+                    static_cast<char>(((unicodeChar & 0x003f)     ) | 0x80);
                 } else {
-                  tokenStr += ((unicodeChar & 0xf000) >> 12) | 0xe0;
-                  tokenStr += ((unicodeChar & 0x0fc0) >>  6) | 0x80;
-                  tokenStr += ((unicodeChar & 0x003f)      ) | 0x80;
+                  tokenStr +=
+                    static_cast<char>(((unicodeChar & 0xf000) >> 12) | 0xe0);
+                  tokenStr +=
+                    static_cast<char>(((unicodeChar & 0x0fc0) >>  6) | 0x80);
+                  tokenStr +=
+                    static_cast<char>(((unicodeChar & 0x003f)      ) | 0x80);
                 }
               }
               break;
@@ -508,14 +513,14 @@ LexerEnumerator::LexerEnumerator(const Lexer& lexer)
 Token
 LexerEnumerator::GetCurrent() const {
   assert(0 <= this->index);
-  assert(this->index < this->lexer.tokens.size());
+  assert(this->index < static_cast<int>(this->lexer.tokens.size()));
   return this->lexer.tokens.at(this->index);
 }
 
 bool
 LexerEnumerator::MoveNext() {
   ++this->index;
-  if (this->index < this->lexer.tokens.size()) {
+  if (this->index < static_cast<int>(this->lexer.tokens.size())) {
     return true;
   } else {
     return false;
