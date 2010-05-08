@@ -3,7 +3,7 @@
 
 #include "IEnumerable.hpp"
 #include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace Kaiko {
 namespace Util {
@@ -27,7 +27,7 @@ private:
   };
 public:
   ContainerEnumerable(const TContainer& container);
-  boost::shared_ptr<IEnumerator<typename TContainer::value_type>> GetEnumerator() const;
+  std::shared_ptr<IEnumerator<typename TContainer::value_type>> GetEnumerator() const;
 private:
   const TContainer& container;
 };
@@ -38,9 +38,9 @@ ContainerEnumerable<TContainer>::ContainerEnumerable(const TContainer& container
 }
 
 template<class TContainer>
-boost::shared_ptr<IEnumerator<typename TContainer::value_type>>
+std::shared_ptr<IEnumerator<typename TContainer::value_type>>
 ContainerEnumerable<TContainer>::GetEnumerator() const {
-  return boost::shared_ptr<Enumerator>(new Enumerator(container.begin(), container.end()));
+  return std::shared_ptr<Enumerator>(new Enumerator(container.begin(), container.end()));
 }
 
 template<class TContainer>

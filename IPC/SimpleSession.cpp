@@ -3,7 +3,6 @@
 #include "../Util/Serialization.hpp"
 #include "../Util/SystemException.hpp"
 
-#include <boost/shared_ptr.hpp>
 #include <cassert>
 #include <deque>
 
@@ -18,7 +17,7 @@ enum ReceivingState {
 };
 
 struct SimpleSession::Impl {
-  explicit Impl(boost::shared_ptr<ITransportClient> transportClient)
+  explicit Impl(std::shared_ptr<ITransportClient> transportClient)
     : transportClient(transportClient),
       receivingState(ReceivingStateInit),
       isActive(true),
@@ -30,7 +29,7 @@ struct SimpleSession::Impl {
     this->isActive = false;
     this->receivingState = ReceivingStateTerminated;
   }
-  boost::shared_ptr<ITransportClient> transportClient;
+  std::shared_ptr<ITransportClient> transportClient;
   std::deque<char> bufferedChars;
   bool isActive;
   ReceivingState receivingState;
@@ -38,7 +37,7 @@ struct SimpleSession::Impl {
   int restLengthToRead;
 };
 
-SimpleSession::SimpleSession(boost::shared_ptr<ITransportClient> transportClient)
+SimpleSession::SimpleSession(std::shared_ptr<ITransportClient> transportClient)
   : pimpl(new Impl(transportClient)) {
 }
 

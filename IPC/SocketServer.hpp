@@ -5,8 +5,7 @@
 #include "SocketClient.hpp"
 
 #include <boost/noncopyable.hpp>
-#include <boost/scoped_ptr.hpp>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace Kaiko {
 namespace IPC {
@@ -19,11 +18,11 @@ public:
   ~SocketServer() throw();
   bool Accept();
   void Close() throw();
-  boost::shared_ptr<ITransportClient> GetLastAcceptedClient() const;
+  std::shared_ptr<ITransportClient> GetLastAcceptedClient() const;
   int GetPort() const;
 private:
   struct Impl;
-  boost::scoped_ptr<Impl> pimpl;
+  std::unique_ptr<Impl> pimpl;
 };
 
 }

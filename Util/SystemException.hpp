@@ -3,7 +3,7 @@
 
 #include "Exception.hpp"
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace Kaiko {
 namespace Util {
@@ -16,7 +16,7 @@ public:
   int GetErrorNo() const;
 private:
   struct Impl;
-  boost::shared_ptr<const Impl> pimpl;
+  std::shared_ptr<const Impl> pimpl;
 };
 
 }

@@ -4,7 +4,7 @@
 #include "ITransportClient.hpp"
 
 #include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <string>
 #include <winsock2.h>
 
@@ -23,7 +23,7 @@ public:
   bool Send(const std::string&);
 private:
   struct Impl;
-  boost::shared_ptr<Impl> pimpl;
+  std::shared_ptr<Impl> pimpl;
 };
 
 }

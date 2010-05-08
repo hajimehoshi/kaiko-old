@@ -1,8 +1,8 @@
 #ifndef KAIKO_UTIL_EXEPTION_HPP
 #define KAIKO_UTIL_EXEPTION_HPP
 
-#include <boost/shared_ptr.hpp>
 #include <exception>
+#include <memory>
 #include <string>
 
 namespace Kaiko {
@@ -17,7 +17,7 @@ public:
   virtual const char* what() const;
 public:
   struct Impl;
-  boost::shared_ptr<const Impl> pimpl;
+  std::shared_ptr<const Impl> pimpl;
 };
 
 }

@@ -21,10 +21,10 @@ BOOST_AUTO_TEST_CASE(IPC_SocketServer) {
   SocketClient clientSocket2("127.0.0.1", server.GetPort());
   SocketClient clientSocket3("127.0.0.1", server.GetPort());
 
-  boost::shared_ptr<ITransportClient> clientSocketInServer1;
-  boost::shared_ptr<ITransportClient> clientSocketInServer2;
-  boost::shared_ptr<ITransportClient> clientSocketInServer3;
-  boost::shared_ptr<ITransportClient> clientSocketInServer4;
+  std::shared_ptr<ITransportClient> clientSocketInServer1;
+  std::shared_ptr<ITransportClient> clientSocketInServer2;
+  std::shared_ptr<ITransportClient> clientSocketInServer3;
+  std::shared_ptr<ITransportClient> clientSocketInServer4;
 
   do {
     BOOST_CHECK_EQUAL(true, server.Accept());
@@ -87,7 +87,7 @@ BOOST_AUTO_TEST_CASE(IPC_SocketServer_SendEmptyData) {
   SocketServer server;
 
   SocketClient clientSocket("127.0.0.1", server.GetPort());
-  boost::shared_ptr<ITransportClient> clientSocketInServer;
+  std::shared_ptr<ITransportClient> clientSocketInServer;
   do {
     BOOST_CHECK_EQUAL(true, server.Accept());
     clientSocketInServer = server.GetLastAcceptedClient();
@@ -104,7 +104,7 @@ BOOST_AUTO_TEST_CASE(IPC_SocketServer_SendBigData) {
   SocketServer server;
 
   SocketClient clientSocket("127.0.0.1", server.GetPort());
-  boost::shared_ptr<ITransportClient> clientSocketInServer;
+  std::shared_ptr<ITransportClient> clientSocketInServer;
   do {
     BOOST_CHECK_EQUAL(true, server.Accept());
     clientSocketInServer = server.GetLastAcceptedClient();

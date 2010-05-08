@@ -28,8 +28,7 @@
 #include "../IPC/ITransportServer.hpp"
 
 #include <boost/noncopyable.hpp>
-#include <boost/scoped_ptr.hpp>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace Kaiko {
 namespace Storage {
@@ -37,11 +36,11 @@ namespace Storage {
 class StorageServer : private boost::noncopyable {
 public:
   StorageServer();
-  void Run(boost::shared_ptr<IPC::ITransportServer> transportServer,
-           boost::shared_ptr<IPC::ISessionFactory> sessionFactory);
+  void Run(std::shared_ptr<IPC::ITransportServer> transportServer,
+           std::shared_ptr<IPC::ISessionFactory> sessionFactory);
 private:
   struct Impl;
-  boost::scoped_ptr<Impl> pimpl;
+  std::unique_ptr<Impl> pimpl;
 };
 
 }

@@ -6,7 +6,7 @@
 #include "ITransportClient.hpp"
 
 #include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace Kaiko {
 namespace IPC {
@@ -14,7 +14,7 @@ namespace IPC {
 class SimpleSessionFactory : public ISessionFactory,
                              private boost::noncopyable {
 public:
-  boost::shared_ptr<ISession> Create(boost::shared_ptr<ITransportClient> transportClient);
+  std::shared_ptr<ISession> Create(std::shared_ptr<ITransportClient> transportClient);
 };
 
 }

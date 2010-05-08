@@ -27,7 +27,7 @@ struct SocketServer::Impl {
   }
   SOCKET socket;
   int port;
-  boost::shared_ptr<SocketClient> lastAcceptedSocketClient;
+  std::shared_ptr<SocketClient> lastAcceptedSocketClient;
 };
 
 SocketServer::SocketServer()
@@ -71,7 +71,7 @@ SocketServer::Close() throw() {
   }
 }
 
-boost::shared_ptr<ITransportClient>
+std::shared_ptr<ITransportClient>
 SocketServer::GetLastAcceptedClient() const {
   return this->pimpl->lastAcceptedSocketClient;
 }

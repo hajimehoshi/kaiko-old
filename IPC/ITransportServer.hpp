@@ -3,7 +3,7 @@
 
 #include "ITransportClient.hpp"
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace Kaiko {
 namespace IPC {
@@ -13,7 +13,7 @@ public:
   virtual ~ITransportServer() { }
   virtual bool Accept() = 0;
   virtual void Close() throw() = 0;
-  virtual boost::shared_ptr<ITransportClient> GetLastAcceptedClient() const = 0;
+  virtual std::shared_ptr<ITransportClient> GetLastAcceptedClient() const = 0;
 };
 
 }

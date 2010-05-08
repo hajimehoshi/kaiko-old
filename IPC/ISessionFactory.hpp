@@ -4,7 +4,7 @@
 #include "ISession.hpp"
 #include "ITransportClient.hpp"
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace Kaiko {
 namespace IPC {
@@ -12,7 +12,7 @@ namespace IPC {
 class ISessionFactory {
 public:
   virtual ~ISessionFactory() { }
-  virtual boost::shared_ptr<ISession> Create(boost::shared_ptr<ITransportClient> transportClient) = 0;
+  virtual std::shared_ptr<ISession> Create(std::shared_ptr<ITransportClient> transportClient) = 0;
 };
 
 }

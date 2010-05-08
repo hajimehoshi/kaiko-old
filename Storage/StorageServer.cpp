@@ -13,7 +13,7 @@ namespace Kaiko {
 namespace Storage {
 
 struct StorageServer::Impl {
-  typedef boost::unordered_set<boost::shared_ptr<IPC::ISession>> Sessions;
+  typedef boost::unordered_set<std::shared_ptr<IPC::ISession>> Sessions;
   Sessions sessions;
 };
 
@@ -22,8 +22,8 @@ StorageServer::StorageServer()
 }
 
 void
-StorageServer::Run(boost::shared_ptr<IPC::ITransportServer> transportServer,
-                   boost::shared_ptr<IPC::ISessionFactory> sessionFactory) {
+StorageServer::Run(std::shared_ptr<IPC::ITransportServer> transportServer,
+                   std::shared_ptr<IPC::ISessionFactory> sessionFactory) {
   assert(transportServer);
   while (true) {
     try {
@@ -40,7 +40,7 @@ StorageServer::Run(boost::shared_ptr<IPC::ITransportServer> transportServer,
     }
     auto it = this->pimpl->sessions.begin();
     while (it != this->pimpl->sessions.end()) {
-      boost::shared_ptr<IPC::ISession> session = *it;
+      std::shared_ptr<IPC::ISession> session = *it;
       if (!session->Receive()) {
         session->Close();
         it = this->pimpl->sessions.erase(it);

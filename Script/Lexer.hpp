@@ -5,7 +5,7 @@
 #include "Token.hpp"
 
 #include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <vector>
 
 namespace Kaiko {
@@ -18,7 +18,7 @@ class Lexer : public Util::IEnumerable<Token>,
   friend class LexerEnumerator;
 public:
   explicit Lexer(IScriptStream& scriptStream);
-  boost::shared_ptr<Util::IEnumerator<Token>> GetEnumerator() const;
+  std::shared_ptr<Util::IEnumerator<Token>> GetEnumerator() const;
 private:
   std::vector<const Token> tokens;
 };

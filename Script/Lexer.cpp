@@ -496,9 +496,9 @@ Lexer::Lexer(IScriptStream& scriptStream) {
   }
 }
 
-boost::shared_ptr<Util::IEnumerator<Token>>
+std::shared_ptr<Util::IEnumerator<Token>>
 Lexer::GetEnumerator() const {
-  return boost::shared_ptr<Util::IEnumerator<Token>>(new LexerEnumerator(*this));
+  return std::shared_ptr<Util::IEnumerator<Token>>(new LexerEnumerator(*this));
 }
 
 LexerEnumerator::LexerEnumerator(const Lexer& lexer)

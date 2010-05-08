@@ -1,8 +1,8 @@
 #ifndef KAIKO_IPC_NAMED_PIPE_HPP
 #define KAIKO_IPC_NAMED_PIPE_HPP
 
-#include <boost/scoped_ptr.hpp>
 #include <boost/noncopyable.hpp>
+#include <memory>
 #include <string>
 
 namespace Kaiko {
@@ -20,7 +20,7 @@ public:
   bool Send(const std::string& data);
 private:
   struct Impl;
-  boost::scoped_ptr<Impl> pimpl;
+  std::unique_ptr<Impl> pimpl;
 };
 
 }

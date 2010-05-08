@@ -45,13 +45,13 @@ public:
 BOOST_AUTO_TEST_CASE(IPC_SimpleSession_Send) {
   {
     // empty
-    boost::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
+    std::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
     SimpleSession session(transportClient);
     BOOST_CHECK_EQUAL(true, session.Send(""));
     BOOST_CHECK_EQUAL(true, transportClient->sentData.empty());
   }
   {
-    boost::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
+    std::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
     SimpleSession session(transportClient);
     const std::string data = std::string(127, 'a');
     BOOST_CHECK_EQUAL(true, session.Send(data));
@@ -60,7 +60,7 @@ BOOST_AUTO_TEST_CASE(IPC_SimpleSession_Send) {
     BOOST_CHECK_EQUAL(data, transportClient->sentData.substr(2));
   }
   {
-    boost::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
+    std::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
     SimpleSession session(transportClient);
     const std::string data = std::string(128, 'a');
     BOOST_CHECK_EQUAL(true, session.Send(data));
@@ -70,7 +70,7 @@ BOOST_AUTO_TEST_CASE(IPC_SimpleSession_Send) {
     BOOST_CHECK_EQUAL(data, transportClient->sentData.substr(3));
   }
   {
-    boost::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
+    std::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
     SimpleSession session(transportClient);
     const std::string data = std::string(129, 'a');
     BOOST_CHECK_EQUAL(true, session.Send(data));
@@ -80,7 +80,7 @@ BOOST_AUTO_TEST_CASE(IPC_SimpleSession_Send) {
     BOOST_CHECK_EQUAL(data, transportClient->sentData.substr(3));
   }
   {
-    boost::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
+    std::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
     SimpleSession session(transportClient);
     const std::string data = std::string(200, 'a');
     BOOST_CHECK_EQUAL(true, session.Send(data));
@@ -90,7 +90,7 @@ BOOST_AUTO_TEST_CASE(IPC_SimpleSession_Send) {
     BOOST_CHECK_EQUAL(data, transportClient->sentData.substr(3));
   }
   {
-    boost::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
+    std::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
     SimpleSession session(transportClient);
     const std::string data = std::string(314159, 'a');
     BOOST_CHECK_EQUAL(true, session.Send(data));
@@ -104,7 +104,7 @@ BOOST_AUTO_TEST_CASE(IPC_SimpleSession_Send) {
 
 BOOST_AUTO_TEST_CASE(IPC_SimpleSession_SendContinuously) {
   {
-    boost::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
+    std::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
     SimpleSession session(transportClient);
     BOOST_CHECK_EQUAL(true, session.Send("foo"));
     BOOST_CHECK_EQUAL(true, session.Send("barbaz"));
@@ -119,7 +119,7 @@ BOOST_AUTO_TEST_CASE(IPC_SimpleSession_SendContinuously) {
 
 BOOST_AUTO_TEST_CASE(IPC_SimpleSession_Receive) {
   {
-    boost::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
+    std::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
     SimpleSession session(transportClient);
     std::string data(127, 'a');
     transportClient->lastReceivedDataCollection.push_back(std::string("\x80\x7f") + data);
@@ -128,7 +128,7 @@ BOOST_AUTO_TEST_CASE(IPC_SimpleSession_Receive) {
     BOOST_CHECK_EQUAL(false, transportClient->isClosed);
   }
   {
-    boost::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
+    std::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
     SimpleSession session(transportClient);
     const std::string data(128, 'a');
     std::string header("\x80\x81");
@@ -139,7 +139,7 @@ BOOST_AUTO_TEST_CASE(IPC_SimpleSession_Receive) {
     BOOST_CHECK_EQUAL(false, transportClient->isClosed);
   }
   {
-    boost::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
+    std::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
     SimpleSession session(transportClient);
     const std::string data(129, 'a');
     const std::string header("\x80\x81\x01");
@@ -149,7 +149,7 @@ BOOST_AUTO_TEST_CASE(IPC_SimpleSession_Receive) {
     BOOST_CHECK_EQUAL(false, transportClient->isClosed);
   }
   {
-    boost::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
+    std::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
     SimpleSession session(transportClient);
     const std::string data(200, 'a');
     const std::string header("\x80\x81\x48");
@@ -159,7 +159,7 @@ BOOST_AUTO_TEST_CASE(IPC_SimpleSession_Receive) {
     BOOST_CHECK_EQUAL(false, transportClient->isClosed);
   }
   {
-    boost::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
+    std::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
     SimpleSession session(transportClient);
     const std::string data(314159, 'a');
     const std::string header("\x80\x93\x96\x2f");
@@ -172,7 +172,7 @@ BOOST_AUTO_TEST_CASE(IPC_SimpleSession_Receive) {
 
 BOOST_AUTO_TEST_CASE(IPC_SimpleSession_ReceiveContinuously) {
   {
-    boost::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
+    std::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
     SimpleSession session(transportClient);
     transportClient->lastReceivedDataCollection.push_back("\x80\x03" "foo" "\x80\x06" "barbaz");
     BOOST_CHECK_EQUAL(true, session.Receive());
@@ -184,7 +184,7 @@ BOOST_AUTO_TEST_CASE(IPC_SimpleSession_ReceiveContinuously) {
     BOOST_CHECK_EQUAL(false, transportClient->isClosed);
   }
   {
-    boost::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
+    std::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
     SimpleSession session(transportClient);
     transportClient->lastReceivedDataCollection.push_back("\x80\x03" "f");
     transportClient->lastReceivedDataCollection.push_back("");
@@ -205,7 +205,7 @@ BOOST_AUTO_TEST_CASE(IPC_SimpleSession_ReceiveContinuously) {
     BOOST_CHECK_EQUAL(false, transportClient->isClosed);
   }
   {
-    boost::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
+    std::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
     SimpleSession session(transportClient);
     const std::string data(4096 * 100, 'a');
     std::string header("\x80\x99\x80");
@@ -224,7 +224,7 @@ BOOST_AUTO_TEST_CASE(IPC_SimpleSession_ReceiveContinuously) {
 
 BOOST_AUTO_TEST_CASE(IPC_SimpleSession_ReceiveInvalidBytes) {
   {
-    boost::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
+    std::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
     SimpleSession session(transportClient);
     transportClient->lastReceivedDataCollection.push_back("\xff");
     BOOST_CHECK_EQUAL(false, session.Receive());
@@ -232,7 +232,7 @@ BOOST_AUTO_TEST_CASE(IPC_SimpleSession_ReceiveInvalidBytes) {
     BOOST_CHECK_EQUAL(true, transportClient->isClosed);
   }
   {
-    boost::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
+    std::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
     SimpleSession session(transportClient);
     transportClient->lastReceivedDataCollection.push_back("\x80\x03" "foo" "\xff");
     BOOST_CHECK_EQUAL(true, session.Receive());
@@ -242,7 +242,7 @@ BOOST_AUTO_TEST_CASE(IPC_SimpleSession_ReceiveInvalidBytes) {
     BOOST_CHECK_EQUAL(true, transportClient->isClosed);
   }
   {
-    boost::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
+    std::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
     SimpleSession session(transportClient);
     transportClient->lastReceivedDataCollection.push_back("\x80\xff\xff\xff\xff\xff");
     BOOST_CHECK_EQUAL(false, session.Receive());
@@ -251,7 +251,7 @@ BOOST_AUTO_TEST_CASE(IPC_SimpleSession_ReceiveInvalidBytes) {
   }
   {
     // empty data
-    boost::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
+    std::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
     SimpleSession session(transportClient);
     std::string bytes("\x80");
     bytes.push_back('\x00');
@@ -263,7 +263,7 @@ BOOST_AUTO_TEST_CASE(IPC_SimpleSession_ReceiveInvalidBytes) {
   }
   {
     // empty data (redundant bytes)
-    boost::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
+    std::shared_ptr<MockTransportClient> transportClient(new MockTransportClient());
     SimpleSession session(transportClient);
     std::string bytes("\x80\x80\x80");
     bytes.push_back('\x00');

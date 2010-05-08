@@ -5,9 +5,9 @@
 namespace Kaiko {
 namespace IPC {
 
-boost::shared_ptr<ISession>
-SimpleSessionFactory::Create(boost::shared_ptr<ITransportClient> transportClient) {
-  return boost::shared_ptr<ISession>(new SimpleSession(transportClient));
+std::shared_ptr<ISession>
+SimpleSessionFactory::Create(std::shared_ptr<ITransportClient> transportClient) {
+  return std::shared_ptr<ISession>(new SimpleSession(transportClient));
 }
 
 }

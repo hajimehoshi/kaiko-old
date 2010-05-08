@@ -1,9 +1,8 @@
 #include "../Util/ContainerEnumerable.hpp"
 
-#include <boost/shared_ptr.hpp>
 #include <boost/test/unit_test.hpp>
-
 #include <list>
+#include <memory>
 #include <vector>
 
 namespace Kaiko {

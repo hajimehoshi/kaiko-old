@@ -9,19 +9,19 @@ namespace Kaiko {
 namespace Util {
 
 struct StringTreeNode::Impl {
-  typedef std::vector<boost::shared_ptr<StringTreeNode>> Nodes;
+  typedef std::vector<std::shared_ptr<StringTreeNode>> Nodes;
   explicit Impl(const std::string& key)
     : key(key) {
     this->childNodesEnumerable.reset(new ContainerEnumerable<Nodes>(this->childNodes));
   }
   std::string key;
   Nodes childNodes;
-  boost::scoped_ptr<ContainerEnumerable<Nodes>> childNodesEnumerable;
+  std::unique_ptr<ContainerEnumerable<Nodes>> childNodesEnumerable;
 };
 
-boost::shared_ptr<StringTreeNode>
+std::shared_ptr<StringTreeNode>
 StringTreeNode::CreateFromString(const std::string& str) {
-  return boost::shared_ptr<StringTreeNode>();
+  return std::shared_ptr<StringTreeNode>();
 }
 
 StringTreeNode::StringTreeNode(const std::string& key)
@@ -30,12 +30,12 @@ StringTreeNode::StringTreeNode(const std::string& key)
 
 void
 StringTreeNode::AddChildNode(const std::string& key) {
-  boost::shared_ptr<StringTreeNode> childNode =
-    boost::shared_ptr<StringTreeNode>(new StringTreeNode(key));
+  std::shared_ptr<StringTreeNode> childNode =
+    std::shared_ptr<StringTreeNode>(new StringTreeNode(key));
   this->pimpl->childNodes.push_back(childNode);
 }
 
-const IEnumerable<boost::shared_ptr<StringTreeNode>>&
+const IEnumerable<std::shared_ptr<StringTreeNode>>&
 StringTreeNode::GetChildNodes() const {
   return *this->pimpl->childNodesEnumerable;
 }
