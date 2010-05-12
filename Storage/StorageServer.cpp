@@ -3,8 +3,6 @@
 #include "../IPC/ISession.hpp"
 #include "../Util/SystemException.hpp"
 
-//#include <boost/property_tree/json_parser.hpp>
-//#include <boost/property_tree/ptree.hpp>
 #include <boost/unordered_set.hpp>
 #include <cassert>
 #include <sstream>
@@ -47,9 +45,6 @@ StorageServer::Run(std::shared_ptr<IPC::ITransportServer> transportServer,
         continue;
       }
       const std::string& data = session->GetLastReceivedData();
-      std::istringstream iss(data);
-      //boost::property_tree::ptree tree;
-      //read_json(iss, tree);
       ++it;
     }
   }
