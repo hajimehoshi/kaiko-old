@@ -50,6 +50,7 @@ private:
 };
 
 Lexer::Lexer(IScriptStream& scriptStream) {
+  // TOOD: rewrite it
   std::map<std::string, TokenType> keywordToTokenType;
   keywordToTokenType.insert(std::map<std::string, TokenType>::value_type("break", TokenTypeKeywordBreak));
   keywordToTokenType.insert(std::map<std::string, TokenType>::value_type("catch", TokenTypeKeywordCatch));
@@ -499,6 +500,18 @@ Lexer::Lexer(IScriptStream& scriptStream) {
       break;
     }
   }
+}
+
+Util::IIterator<Token>&
+Lexer::Begin() const {
+  // TODO: implement it
+  return *reinterpret_cast<Util::IIterator<Token>*>(nullptr);
+}
+
+Util::IIterator<Token>&
+Lexer::End() const {
+  // TODO: implement it
+  return *reinterpret_cast<Util::IIterator<Token>*>(nullptr);
 }
 
 std::shared_ptr<Util::IEnumerator<Token>>

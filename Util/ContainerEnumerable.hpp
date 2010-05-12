@@ -27,6 +27,8 @@ private:
   };
 public:
   ContainerEnumerable(const TContainer& container);
+  IIterator<typename TContainer::value_type>& Begin() const;
+  IIterator<typename TContainer::value_type>& End() const;
   std::shared_ptr<IEnumerator<typename TContainer::value_type>> GetEnumerator() const;
 private:
   const TContainer& container;
@@ -35,6 +37,20 @@ private:
 template<class TContainer>
 ContainerEnumerable<TContainer>::ContainerEnumerable(const TContainer& container)
   : container(container) {
+}
+
+template<class TContainer>
+IIterator<typename TContainer::value_type>&
+ContainerEnumerable<TContainer>::Begin() const {
+  // TODO: implement it
+  return *reinterpret_cast<IIterator<typename TContainer::value_type>*>(nullptr);
+}
+
+template<class TContainer>
+IIterator<typename TContainer::value_type>&
+ContainerEnumerable<TContainer>::End() const {
+  // TODO: implement it
+  return *reinterpret_cast<IIterator<typename TContainer::value_type>*>(nullptr);
 }
 
 template<class TContainer>
