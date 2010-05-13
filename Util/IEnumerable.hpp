@@ -13,8 +13,8 @@ template<class T>
 class IEnumerable {
 public:
   virtual ~IEnumerable() { }
-  virtual IIterator<T>& Begin() const = 0;
-  virtual IIterator<T>& End() const = 0;
+  virtual IIterator<T>& begin() const = 0;
+  virtual IIterator<T>& end() const = 0;
   virtual std::shared_ptr<IEnumerator<T>> GetEnumerator() const = 0;
 };
 

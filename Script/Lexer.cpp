@@ -503,13 +503,13 @@ Lexer::Lexer(IScriptStream& scriptStream) {
 }
 
 Util::IIterator<Token>&
-Lexer::Begin() const {
+Lexer::begin() const {
   // TODO: implement it
   return *reinterpret_cast<Util::IIterator<Token>*>(nullptr);
 }
 
 Util::IIterator<Token>&
-Lexer::End() const {
+Lexer::end() const {
   // TODO: implement it
   return *reinterpret_cast<Util::IIterator<Token>*>(nullptr);
 }
