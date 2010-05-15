@@ -15,8 +15,7 @@ struct StringTreeNode::Impl {
     : key(key) {
   }
   static std::tuple<std::shared_ptr<StringTreeNode>, int>
-  StrToNode(const std::string::const_iterator& begin,
-            const std::string::const_iterator& end) {
+  StrToNode(const std::string::const_iterator& begin, const std::string::const_iterator& end) {
     int readBytesNum = 0;
     int keyLength = 0;
     {

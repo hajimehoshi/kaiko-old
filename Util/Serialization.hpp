@@ -13,7 +13,7 @@ namespace Util {
 class Serialization : boost::noncopyable {
 public:
   template<class TInputIterator>
-  static std::tuple<int, int> BytesToLength(TInputIterator begin, TInputIterator end);
+  static std::tuple<int, int> BytesToLength(const TInputIterator& begin, const TInputIterator& end);
   static std::string LengthToBytes(int length);
 private:
   Serialization();
@@ -21,7 +21,7 @@ private:
 
 template<class TInputIterator>
 std::tuple<int, int>
-Serialization::BytesToLength(TInputIterator begin, TInputIterator end) {
+Serialization::BytesToLength(const TInputIterator& begin, const TInputIterator& end) {
   int length = 0;
   int readBytesNum = 0;
   for (TInputIterator it = begin; it != end; ++it) {
