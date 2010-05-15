@@ -90,15 +90,6 @@ StringTreeNode::AddChildNode(const std::string& key) {
   this->pimpl->childNodes.push_back(childNode);
 }
 
-bool
-StringTreeNode::Contains(const std::string& key) const {
-  return std::find_if(this->pimpl->childNodes.begin(),
-                      this->pimpl->childNodes.end(),
-                      [&](const std::shared_ptr<StringTreeNode>& t) {
-                        return t->GetKey() == key;
-                      }) != this->pimpl->childNodes.end();
-}
-
 const StringTreeNode::Nodes
 StringTreeNode::GetChildNodes() const {
   return this->pimpl->childNodes;
