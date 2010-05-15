@@ -21,9 +21,14 @@ struct StringTreeNode::Impl {
     int keyLength = 0;
     {
       int readBytesNum2;
-      std::tie(keyLength, readBytesNum2) = Serialization::BytesToLength(begin + readBytesNum, end);
+      try {
+        std::tie(keyLength, readBytesNum2) = Serialization::BytesToLength(begin + readBytesNum, end);
+      } catch (const Util::Exception&) {
+        // TODO: logging
+        return std::make_tuple(std::shared_ptr<StringTreeNode>(), 0);
+      }
       if (keyLength == 0) {
-        // logging
+        // TODO: logging
         return std::make_tuple(std::shared_ptr<StringTreeNode>(), 0);
       }
       readBytesNum += readBytesNum2;
@@ -33,7 +38,12 @@ struct StringTreeNode::Impl {
     int childNodesNum = 0;
     {
       int readBytesNum2;
-      std::tie(childNodesNum, readBytesNum2) = Serialization::BytesToLength(begin + readBytesNum, end);
+      try {
+        std::tie(childNodesNum, readBytesNum2) = Serialization::BytesToLength(begin + readBytesNum, end);
+      } catch (const Util::Exception&) {
+        // TODO: logging
+        return std::make_tuple(std::shared_ptr<StringTreeNode>(), 0);
+      }
       if (keyLength == 0) {
         // TODO: logging
         return std::make_tuple(std::shared_ptr<StringTreeNode>(), 0);
