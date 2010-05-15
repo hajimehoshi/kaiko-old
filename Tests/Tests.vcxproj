@@ -97,7 +97,8 @@
     <ClCompile Include="IPC.SimpleSession.cpp" />
     <ClCompile Include="IPC.SocketServer.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Util.Serialize.cpp" />
+    <ClCompile Include="Storage.StorageServer.cpp" />
+    <ClCompile Include="Util.Serialization.cpp" />
     <ClCompile Include="Util.Strings.cpp" />
     <ClCompile Include="Util.StringTreeNode.cpp" />
     <ClCompile Include="Util.SystemException.cpp" />
