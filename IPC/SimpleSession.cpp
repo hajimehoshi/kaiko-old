@@ -96,12 +96,11 @@ SimpleSession::Receive() {
     case ReceivingStateLength:
       {
         assert(!this->pimpl->restLengthToRead);
-        int readBytesNum = 0;
-        int length = 0;
+        int length;
+        int readBytesNum;
         try {
-          length = Util::Serialization::BytesToLength(this->pimpl->bufferedChars.begin(),
-                                                      this->pimpl->bufferedChars.end(),
-                                                      &readBytesNum);
+          std::tie(length, readBytesNum) = Util::Serialization::BytesToLength(this->pimpl->bufferedChars.begin(),
+                                                                              this->pimpl->bufferedChars.end());
         } catch (const Util::Exception&) {
           // TODO: logging
           goto Failed;

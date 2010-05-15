@@ -14,42 +14,42 @@ struct StringTreeNode::Impl {
   explicit Impl(const std::string& key)
     : key(key) {
   }
-  static std::shared_ptr<StringTreeNode>
-  StrToNode(std::string::const_iterator begin, std::string::const_iterator end,
-            int* readBytesNum) {
-    assert(readBytesNum);
-    *readBytesNum = 0;
+  static std::tuple<std::shared_ptr<StringTreeNode>, int>
+  StrToNode(const std::string::const_iterator& begin,
+            const std::string::const_iterator& end) {
+    int readBytesNum = 0;
     int keyLength = 0;
     {
-      int x = 0;
-      keyLength = Serialization::BytesToLength(begin + *readBytesNum, end, &x);
+      int readBytesNum2;
+      std::tie(keyLength, readBytesNum2) = Serialization::BytesToLength(begin + readBytesNum, end);
       if (keyLength == 0) {
         // logging
-        return std::shared_ptr<StringTreeNode>();
+        return std::make_tuple(std::shared_ptr<StringTreeNode>(), 0);
       }
-      *readBytesNum += x;
+      readBytesNum += readBytesNum2;
     }
-    const std::string key(begin + *readBytesNum, begin + *readBytesNum + keyLength);
-    *readBytesNum += keyLength;
+    const std::string key(begin + readBytesNum, begin + readBytesNum + keyLength);
+    readBytesNum += keyLength;
     int childNodesNum = 0;
     {
-      int x = 0;
-      childNodesNum = Serialization::BytesToLength(begin + *readBytesNum, end, &x);
+      int readBytesNum2;
+      std::tie(childNodesNum, readBytesNum2) = Serialization::BytesToLength(begin + readBytesNum, end);
       if (keyLength == 0) {
         // TODO: logging
-        return std::shared_ptr<StringTreeNode>();
+        return std::make_tuple(std::shared_ptr<StringTreeNode>(), 0);
       }
-      *readBytesNum += x;
+      readBytesNum += readBytesNum2;
     }
     std::shared_ptr<StringTreeNode> stringTreeNode(new StringTreeNode(key));
     stringTreeNode->pimpl->childNodes.reserve(childNodesNum);
     for (int i = 0; i < childNodesNum; ++i) {
-      int x = 0;
-      auto childNode = StrToNode(begin + *readBytesNum, end, &x);
+      std::shared_ptr<StringTreeNode> childNode;
+      int readBytesNum2;
+      std::tie(childNode, readBytesNum2) = StrToNode(begin + readBytesNum, end);
       stringTreeNode->pimpl->childNodes.push_back(childNode);
-      *readBytesNum += x;
+      readBytesNum += readBytesNum2;
     }
-    return stringTreeNode;
+    return std::make_tuple(stringTreeNode, readBytesNum);
   }
   std::string key;
   Nodes childNodes;
@@ -57,8 +57,9 @@ struct StringTreeNode::Impl {
 
 std::shared_ptr<StringTreeNode>
 StringTreeNode::CreateFromString(const std::string& str) {
+  std::shared_ptr<StringTreeNode> result;
   int readBytesNum = 0;
-  auto result = StringTreeNode::Impl::StrToNode(str.begin(), str.end(), &readBytesNum);
+  std::tie(result, readBytesNum) = StringTreeNode::Impl::StrToNode(str.begin(), str.end());
   if (readBytesNum != static_cast<int>(str.size())) {
     // TODO: logging
     return std::shared_ptr<StringTreeNode>();

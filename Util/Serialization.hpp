@@ -5,6 +5,7 @@
 
 #include <boost/noncopyable.hpp>
 #include <string>
+#include <tuple>
 
 namespace Kaiko {
 namespace Util {
@@ -12,35 +13,33 @@ namespace Util {
 class Serialization : boost::noncopyable {
 public:
   template<class TInputIterator>
-  static int BytesToLength(TInputIterator begin, TInputIterator end, int* readBytesNum);
+  static std::tuple<int, int> BytesToLength(TInputIterator begin, TInputIterator end);
   static std::string LengthToBytes(int length);
 private:
   Serialization();
 };
 
 template<class TInputIterator>
-int Serialization::BytesToLength(TInputIterator begin, TInputIterator end, int* readBytesNum) {
+std::tuple<int, int>
+Serialization::BytesToLength(TInputIterator begin, TInputIterator end) {
   int length = 0;
-  *readBytesNum = 0;
+  int readBytesNum = 0;
   for (TInputIterator it = begin; it != end; ++it) {
-    ++(*readBytesNum);
+    ++readBytesNum;
     const char ch = *it;
     length <<= 7;
     length += ch & 0x7f;
     if (length == 0 && ch == '\x80') {
-      readBytesNum = 0;
       throw Exception(__FILE__, __LINE__, "redundant bytes");
     }
     if (length < 0) {
-      readBytesNum = 0;
       throw Exception(__FILE__, __LINE__, "too big length");
     }
     if ((ch & 0x80) == 0) {
-      return length;
+      return std::make_tuple(length, readBytesNum);
     }
   }
-  *readBytesNum = 0;
-  return 0;
+  return std::make_tuple(0, 0);
 }
 
 }

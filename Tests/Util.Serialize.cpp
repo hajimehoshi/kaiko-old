@@ -12,51 +12,64 @@ using namespace Kaiko::Util;
 BOOST_AUTO_TEST_CASE(Util_Serialization_BytesToLength) {
   {
     const std::string bytes("");
-    int readBytesNum = 0;
-    BOOST_CHECK_EQUAL(0, Serialization::BytesToLength(bytes.begin(), bytes.end(), &readBytesNum));
+    int length;
+    int readBytesNum;
+    std::tie(length, readBytesNum) = Serialization::BytesToLength(bytes.begin(), bytes.end());
+    BOOST_CHECK_EQUAL(0, length);
     BOOST_CHECK_EQUAL(0, readBytesNum);
   }
   {
     const std::string bytes("\x03");
-    int readBytesNum = 0;
-    BOOST_CHECK_EQUAL(3, Serialization::BytesToLength(bytes.begin(), bytes.end(), &readBytesNum));
+    int length;
+    int readBytesNum;
+    std::tie(length, readBytesNum) = Serialization::BytesToLength(bytes.begin(), bytes.end());
+    BOOST_CHECK_EQUAL(3, length);
     BOOST_CHECK_EQUAL(1, readBytesNum);
   }
   {
     const std::string bytes("\x7f");
-    int readBytesNum = 0;
-    BOOST_CHECK_EQUAL(127, Serialization::BytesToLength(bytes.begin(), bytes.end(), &readBytesNum));
+    int length;
+    int readBytesNum;
+    std::tie(length, readBytesNum) = Serialization::BytesToLength(bytes.begin(), bytes.end());
+    BOOST_CHECK_EQUAL(127, length);
     BOOST_CHECK_EQUAL(1, readBytesNum);
   }
   {
     std::string bytes("\x81");
     bytes.push_back('\x00');
-    int readBytesNum = 0;
-    BOOST_CHECK_EQUAL(128, Serialization::BytesToLength(bytes.begin(), bytes.end(), &readBytesNum));
+    int length;
+    int readBytesNum;
+    std::tie(length, readBytesNum) = Serialization::BytesToLength(bytes.begin(), bytes.end());
+    BOOST_CHECK_EQUAL(128, length);
     BOOST_CHECK_EQUAL(2, readBytesNum);
   }
   {
     const std::string bytes("\x81\x01");
-    int readBytesNum = 0;
-    BOOST_CHECK_EQUAL(129, Serialization::BytesToLength(bytes.begin(), bytes.end(), &readBytesNum));
+    int length;
+    int readBytesNum;
+    std::tie(length, readBytesNum) = Serialization::BytesToLength(bytes.begin(), bytes.end());
+    BOOST_CHECK_EQUAL(129, length);
     BOOST_CHECK_EQUAL(2, readBytesNum);
   }
   {
     const std::string bytes("\x81\x48");
-    int readBytesNum = 0;
-    BOOST_CHECK_EQUAL(200, Serialization::BytesToLength(bytes.begin(), bytes.end(), &readBytesNum));
+    int length;
+    int readBytesNum;
+    std::tie(length, readBytesNum) = Serialization::BytesToLength(bytes.begin(), bytes.end());
+    BOOST_CHECK_EQUAL(200, length);
     BOOST_CHECK_EQUAL(2, readBytesNum);
   }
   {
     const std::string bytes("\x93\x96\x2f");
-    int readBytesNum = 0;
-    BOOST_CHECK_EQUAL(314159, Serialization::BytesToLength(bytes.begin(), bytes.end(), &readBytesNum));
+    int length;
+    int readBytesNum;
+    std::tie(length, readBytesNum) = Serialization::BytesToLength(bytes.begin(), bytes.end());
+    BOOST_CHECK_EQUAL(314159, length);
     BOOST_CHECK_EQUAL(3, readBytesNum);
   }
   {
     const std::string bytes("\xff\xff\xff\xff\xff");
-    int readBytesNum = 0;
-    BOOST_CHECK_THROW(Serialization::BytesToLength(bytes.begin(), bytes.end(), &readBytesNum), Exception);
+    BOOST_CHECK_THROW(Serialization::BytesToLength(bytes.begin(), bytes.end()), Exception);
   }
 }
 
@@ -64,8 +77,7 @@ BOOST_AUTO_TEST_CASE(Util_Serialization_BytesToLength_Error) {
   {
     // redundant bytes
     const std::string bytes("\x80\x01");
-    int readBytesNum = 0;
-    BOOST_CHECK_THROW(Serialization::BytesToLength(bytes.begin(), bytes.end(), &readBytesNum), Exception);
+    BOOST_CHECK_THROW(Serialization::BytesToLength(bytes.begin(), bytes.end()), Exception);
   }
 }
 
