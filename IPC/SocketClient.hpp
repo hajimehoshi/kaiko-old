@@ -23,7 +23,7 @@ public:
   bool Send(const std::string&);
 private:
   struct Impl;
-  std::shared_ptr<Impl> pimpl;
+  const std::unique_ptr<Impl> pimpl;
 };
 
 }

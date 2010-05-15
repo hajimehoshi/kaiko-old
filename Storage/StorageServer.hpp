@@ -35,12 +35,13 @@ namespace Storage {
 
 class StorageServer : private boost::noncopyable {
 public:
-  StorageServer();
-  void Run(std::shared_ptr<IPC::ITransportServer> transportServer,
-           std::shared_ptr<IPC::ISessionFactory> sessionFactory);
+  StorageServer(std::shared_ptr<IPC::ITransportServer> transportServer,
+                std::shared_ptr<IPC::ISessionFactory> sessionFactory);
+  ~StorageServer() throw();
+  bool Execute();
 private:
   struct Impl;
-  std::unique_ptr<Impl> pimpl;
+  const std::unique_ptr<Impl> pimpl;
 };
 
 }

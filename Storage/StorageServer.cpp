@@ -10,44 +10,51 @@
 namespace Kaiko {
 namespace Storage {
 
-struct StorageServer::Impl {
+struct StorageServer::Impl : private boost::noncopyable {
   typedef boost::unordered_set<std::shared_ptr<IPC::ISession>> Sessions;
+  Impl(std::shared_ptr<IPC::ITransportServer> transportServer,
+       std::shared_ptr<IPC::ISessionFactory> sessionFactory)
+    : transportServer(transportServer), sessionFactory(sessionFactory) {
+  }
+  const std::shared_ptr<IPC::ITransportServer> transportServer;
+  const std::shared_ptr<IPC::ISessionFactory> sessionFactory;
   Sessions sessions;
 };
 
-StorageServer::StorageServer()
-  : pimpl(new Impl()) {
+StorageServer::StorageServer(std::shared_ptr<IPC::ITransportServer> transportServer,
+                             std::shared_ptr<IPC::ISessionFactory> sessionFactory)
+  : pimpl(new Impl(transportServer, sessionFactory)) {
 }
 
-void
-StorageServer::Run(std::shared_ptr<IPC::ITransportServer> transportServer,
-                   std::shared_ptr<IPC::ISessionFactory> sessionFactory) {
-  assert(transportServer);
-  for (;;) {
-    try {
-      if (!transportServer->Accept()) {
-        break;
-      }
-    } catch (const Util::SystemException&) {
-      // TODO: logging
-      break;
+StorageServer::~StorageServer() throw() {
+}
+
+bool
+StorageServer::Execute() {
+  try {
+    if (!this->pimpl->transportServer->Accept()) {
+      return false;
     }
-    auto transportClient = transportServer->GetLastAcceptedClient();
-    if (transportClient) {
-      this->pimpl->sessions.insert(sessionFactory->Create(transportClient));
-    }
-    auto it = this->pimpl->sessions.begin();
-    while (it != this->pimpl->sessions.end()) {
-      std::shared_ptr<IPC::ISession> session = *it;
-      if (!session->Receive()) {
-        session->Close();
-        it = this->pimpl->sessions.erase(it);
-        continue;
-      }
-      const std::string& data = session->GetLastReceivedData();
-      ++it;
-    }
+  } catch (const Util::SystemException&) {
+    // TODO: logging
+    return false;
   }
+  auto transportClient = this->pimpl->transportServer->GetLastAcceptedClient();
+  if (transportClient) {
+    this->pimpl->sessions.insert(this->pimpl->sessionFactory->Create(transportClient));
+  }
+  auto it = this->pimpl->sessions.begin();
+  while (it != this->pimpl->sessions.end()) {
+    std::shared_ptr<IPC::ISession> session = *it;
+    if (!session->Receive()) {
+      session->Close();
+      it = this->pimpl->sessions.erase(it);
+      continue;
+    }
+    const std::string& data = session->GetLastReceivedData();
+    ++it;
+  }
+  return true;
 }
 
 }

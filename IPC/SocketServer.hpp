@@ -22,7 +22,7 @@ public:
   int GetPort() const;
 private:
   struct Impl;
-  std::unique_ptr<Impl> pimpl;
+  const std::unique_ptr<Impl> pimpl;
 };
 
 }
