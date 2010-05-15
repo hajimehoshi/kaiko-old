@@ -77,11 +77,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Script\Script.vcxproj">
-      <Project>{27fe68e5-eadb-49a8-b217-c65d46467226}</Project>
-      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-    </ProjectReference>
     <ProjectReference Include="..\Storage\Storage.vcxproj">
       <Project>{579d558f-d420-489f-97e7-ed869c0ba5f9}</Project>
       <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
@@ -103,8 +98,6 @@
     <ClCompile Include="IPC.SimpleSession.cpp" />
     <ClCompile Include="IPC.SocketServer.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Script.Lexer.cpp" />
-    <ClCompile Include="Script.ScriptStream.cpp" />
     <ClCompile Include="Util.ContainerEnumerable.cpp" />
     <ClCompile Include="Util.Serialize.cpp" />
     <ClCompile Include="Util.Strings.cpp" />
