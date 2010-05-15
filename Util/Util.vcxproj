@@ -67,11 +67,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ContainerEnumerable.hpp" />
     <ClInclude Include="Exception.hpp" />
-    <ClInclude Include="IEnumerable.hpp" />
-    <ClInclude Include="IEnumerator.hpp" />
-    <ClInclude Include="IIterator.hpp" />
     <ClInclude Include="Serialization.hpp" />
     <ClInclude Include="Strings.hpp" />
     <ClInclude Include="StringTreeNode.hpp" />

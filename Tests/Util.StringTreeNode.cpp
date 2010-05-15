@@ -18,12 +18,10 @@ BOOST_AUTO_TEST_CASE(Util_StringTreeNode) {
     BOOST_CHECK_EQUAL(true, stringTreeNode.Contains("baz"));
     BOOST_CHECK_EQUAL(false, stringTreeNode.Contains("qux"));
 
-    auto e = stringTreeNode.GetChildNodes().GetEnumerator();
-    BOOST_CHECK_EQUAL(true, e->MoveNext());
-    BOOST_CHECK_EQUAL("bar", e->GetCurrent()->GetKey());
-    BOOST_CHECK_EQUAL(true, e->MoveNext());
-    BOOST_CHECK_EQUAL("baz", e->GetCurrent()->GetKey());
-    BOOST_CHECK_EQUAL(false, e->MoveNext());
+    auto nodes = stringTreeNode.GetChildNodes();
+    BOOST_CHECK_EQUAL(2, static_cast<int>(nodes.size()));
+    BOOST_CHECK_EQUAL("bar", nodes[0]->GetKey());
+    BOOST_CHECK_EQUAL("baz", nodes[1]->GetKey());
   }
 }
 

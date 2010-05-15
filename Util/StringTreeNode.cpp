@@ -1,6 +1,5 @@
 #include "StringTreeNode.hpp"
 
-#include "ContainerEnumerable.hpp"
 #include "Serialization.hpp"
 
 #include <algorithm>
@@ -11,10 +10,8 @@ namespace Kaiko {
 namespace Util {
 
 struct StringTreeNode::Impl {
-  typedef std::vector<std::shared_ptr<StringTreeNode>> Nodes;
   explicit Impl(const std::string& key)
     : key(key) {
-    this->childNodesEnumerable.reset(new ContainerEnumerable<Nodes>(this->childNodes));
   }
   static std::shared_ptr<StringTreeNode> StrToNode(std::string::const_iterator begin,
                                                    std::string::const_iterator end,
@@ -38,7 +35,7 @@ struct StringTreeNode::Impl {
       int x = 0;
       childNodesNum = Serialization::BytesToLength(begin + *readBytesNum, end, &x);
       if (keyLength == 0) {
-        // logging
+        // TODO: logging
         return std::shared_ptr<StringTreeNode>();
       }
       *readBytesNum += x;
@@ -55,7 +52,6 @@ struct StringTreeNode::Impl {
   }
   std::string key;
   Nodes childNodes;
-  std::unique_ptr<ContainerEnumerable<Nodes>> childNodesEnumerable;
 };
 
 std::shared_ptr<StringTreeNode>
@@ -63,7 +59,7 @@ StringTreeNode::CreateFromString(const std::string& str) {
   int readBytesNum = 0;
   auto result = StringTreeNode::Impl::StrToNode(str.begin(), str.end(), &readBytesNum);
   if (readBytesNum != static_cast<int>(str.size())) {
-    // logging
+    // TODO: logging
     return std::shared_ptr<StringTreeNode>();
   }
   return result;
@@ -92,9 +88,9 @@ StringTreeNode::Contains(const std::string& key) const {
                       }) != this->pimpl->childNodes.end();
 }
 
-const IEnumerable<std::shared_ptr<StringTreeNode>>&
+const StringTreeNode::Nodes
 StringTreeNode::GetChildNodes() const {
-  return *this->pimpl->childNodesEnumerable;
+  return this->pimpl->childNodes;
 }
 
 const std::string&
