@@ -94,7 +94,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="IPC.NamedPipe.cpp" />
     <ClCompile Include="IPC.SimpleSession.cpp" />
     <ClCompile Include="IPC.SocketServer.cpp" />
     <ClCompile Include="Main.cpp" />

@@ -75,7 +75,6 @@
     <ClInclude Include="ISessionFactory.hpp" />
     <ClInclude Include="ITransportClient.hpp" />
     <ClInclude Include="ITransportServer.hpp" />
-    <ClInclude Include="NamedPipe.hpp" />
     <ClInclude Include="SimpleSession.hpp" />
     <ClInclude Include="SimpleSessionFactory.hpp" />
     <ClInclude Include="SocketClient.hpp" />
@@ -84,7 +83,6 @@
     <ClInclude Include="SocketServer.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="NamedPipe.cpp" />
     <ClCompile Include="SimpleSession.cpp" />
     <ClCompile Include="SimpleSessionFactory.cpp" />
     <ClCompile Include="SocketClient.cpp" />
