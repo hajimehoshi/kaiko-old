@@ -4,6 +4,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <tuple>
 #include <vector>
 
 namespace Kaiko {
@@ -13,9 +14,9 @@ struct StringTreeNode::Impl {
   explicit Impl(const std::string& key)
     : key(key) {
   }
-  static std::shared_ptr<StringTreeNode> StrToNode(std::string::const_iterator begin,
-                                                   std::string::const_iterator end,
-                                                   int* readBytesNum) {
+  static std::shared_ptr<StringTreeNode>
+  StrToNode(std::string::const_iterator begin, std::string::const_iterator end,
+            int* readBytesNum) {
     assert(readBytesNum);
     *readBytesNum = 0;
     int keyLength = 0;
