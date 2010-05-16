@@ -35,8 +35,8 @@ namespace Storage {
 
 class StorageServer : private boost::noncopyable {
 public:
-  StorageServer(std::shared_ptr<IPC::ITransportServer> transportServer,
-                std::shared_ptr<IPC::ISessionFactory> sessionFactory);
+  StorageServer(const std::shared_ptr<IPC::ITransportServer>& transportServer,
+                const std::shared_ptr<IPC::ISessionFactory>& sessionFactory);
   ~StorageServer() throw();
   bool Execute();
 private:

@@ -12,7 +12,7 @@ namespace IPC {
 class ISessionFactory {
 public:
   virtual ~ISessionFactory() { }
-  virtual std::shared_ptr<ISession> Create(std::shared_ptr<ITransportClient> transportClient) = 0;
+  virtual std::shared_ptr<ISession> Create(const std::shared_ptr<ITransportClient>& transportClient) = 0;
 };
 
 }

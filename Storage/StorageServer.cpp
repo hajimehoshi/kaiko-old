@@ -12,8 +12,8 @@ namespace Storage {
 
 struct StorageServer::Impl : private boost::noncopyable {
   typedef boost::unordered_set<std::shared_ptr<IPC::ISession>> Sessions;
-  Impl(std::shared_ptr<IPC::ITransportServer> transportServer,
-       std::shared_ptr<IPC::ISessionFactory> sessionFactory)
+  Impl(const std::shared_ptr<IPC::ITransportServer>& transportServer,
+       const std::shared_ptr<IPC::ISessionFactory>& sessionFactory)
     : transportServer(transportServer), sessionFactory(sessionFactory) {
   }
   const std::shared_ptr<IPC::ITransportServer> transportServer;
@@ -21,8 +21,8 @@ struct StorageServer::Impl : private boost::noncopyable {
   Sessions sessions;
 };
 
-StorageServer::StorageServer(std::shared_ptr<IPC::ITransportServer> transportServer,
-                             std::shared_ptr<IPC::ISessionFactory> sessionFactory)
+StorageServer::StorageServer(const std::shared_ptr<IPC::ITransportServer>& transportServer,
+                             const std::shared_ptr<IPC::ISessionFactory>& sessionFactory)
   : pimpl(new Impl(transportServer, sessionFactory)) {
 }
 

@@ -14,7 +14,7 @@ namespace IPC {
 class SimpleSessionFactory : public ISessionFactory,
                              private boost::noncopyable {
 public:
-  std::shared_ptr<ISession> Create(std::shared_ptr<ITransportClient> transportClient);
+  std::shared_ptr<ISession> Create(const std::shared_ptr<ITransportClient>& transportClient);
 };
 
 }

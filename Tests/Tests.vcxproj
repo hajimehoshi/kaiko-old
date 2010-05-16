@@ -103,6 +103,9 @@
     <ClCompile Include="Util.StringTreeNode.cpp" />
     <ClCompile Include="Util.SystemException.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MockObjects.hpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -18,7 +18,7 @@ public:
   ~SocketServer() throw();
   bool Accept();
   void Close() throw();
-  std::shared_ptr<ITransportClient> GetLastAcceptedClient() const;
+  const std::shared_ptr<ITransportClient>& GetLastAcceptedClient() const;
   int GetPort() const;
 private:
   struct Impl;
