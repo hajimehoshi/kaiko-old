@@ -54,20 +54,19 @@ StorageServer::Execute() {
     while (it != this->pimpl->sessions.end()) {
       const std::shared_ptr<IPC::ISession>& session = *it;
       if (!session->Receive()) {
-        goto Fail;
-      }
-      const std::string& data = session->GetLastReceivedData();
-      if (!this->pimpl->storageMessageProcessor->Process(data)) {
-        goto Fail;
+        session->Close();
+        it = this->pimpl->sessions.erase(it);
+        continue;
       }
       ++it;
-      continue;
-    Fail:
-      session->Close();
-      it = this->pimpl->sessions.erase(it);
-      continue;
     }
   }
+  // processing
+  std::for_each(this->pimpl->sessions.begin(),
+                this->pimpl->sessions.end(),
+                [&](const std::shared_ptr<IPC::ISession> session) {
+                  this->pimpl->storageMessageProcessor->Process(session);
+                });
   // sending
   {
     auto it = this->pimpl->sessions.begin();
@@ -79,7 +78,6 @@ StorageServer::Execute() {
         continue;
       }
       ++it;
-      continue;
     }
   }
   return true;

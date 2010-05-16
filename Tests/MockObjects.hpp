@@ -90,7 +90,7 @@ public:
     : transportClient(transportClient), receivedDataCollectionIndex(-1), isClosed(false) {
   }
   void
-  AddDataToSend(const std::string& data) {
+  AddDataToSend(const std::string&) {
   }
   void
   Close() throw() {
@@ -148,9 +148,8 @@ namespace Storage {
 class MockStorageMessageProcessor : public Kaiko::Storage::IStorageMessageProcessor,
                                     private boost::noncopyable {
 public:
-  bool
-  Process(const std::string&) {
-    return true;
+  void
+  Process(const std::shared_ptr<Kaiko::IPC::ISession>&) {
   }
 };
 

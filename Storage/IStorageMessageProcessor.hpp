@@ -1,8 +1,9 @@
-#ifndef KAIKO_STORAGE_ISTORAGEMESSAGEPROCESSOR
-#define KAIKO_STORAGE_ISTORAGEMESSAGEPROCESSOR
+#ifndef KAIKO_STORAGE_ISTORAGEMESSAGEPROCESSOR_HPP
+#define KAIKO_STORAGE_ISTORAGEMESSAGEPROCESSOR_HPP
+
+#include "../IPC/ISession.hpp"
 
 #include <memory>
-#include <string>
 
 namespace Kaiko {
 namespace Storage {
@@ -10,7 +11,7 @@ namespace Storage {
 class IStorageMessageProcessor {
 public:
   virtual ~IStorageMessageProcessor() { }
-  virtual bool Process(const std::string& message) = 0;
+  virtual void Process(const std::shared_ptr<IPC::ISession>& session) = 0;
 };
 
 }
