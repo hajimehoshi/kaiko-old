@@ -73,7 +73,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IJsonObject.hpp" />
     <ClInclude Include="StorageServer.hpp" />
   </ItemGroup>
   <ItemGroup>
