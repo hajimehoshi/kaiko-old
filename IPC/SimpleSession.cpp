@@ -17,7 +17,7 @@ enum ReceivingState {
   ReceivingStateTerminated,
 };
 
-struct SimpleSession::Impl {
+struct SimpleSession::Impl : private boost::noncopyable {
   explicit Impl(const std::shared_ptr<ITransportClient>& transportClient)
     : transportClient(transportClient),
       receivingState(ReceivingStateInit),
@@ -31,9 +31,9 @@ struct SimpleSession::Impl {
     this->isActive = false;
     this->receivingState = ReceivingStateTerminated;
   }
-  std::shared_ptr<ITransportClient> transportClient;
+  const std::shared_ptr<ITransportClient> transportClient;
   std::vector<const std::string> dataCollectionToSend;
-  std::deque<char> bufferedChars;
+  std::deque<const char> bufferedChars;
   bool isActive;
   ReceivingState receivingState;
   std::string lastReceivedData;
