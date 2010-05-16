@@ -19,7 +19,7 @@ class MockTransportClient : public ITransportClient,
                             private boost::noncopyable {
 public:
   MockTransportClient()
-    : lastReceivedDataCollectionIndex(-1), isClosed(false) {
+    : receivedDataCollectionIndex(-1), isClosed(false) {
   }
   void
   Close() throw() {
@@ -27,8 +27,8 @@ public:
   }
   const std::string&
   GetLastReceivedData() const {
-    if (this->lastReceivedDataCollectionIndex < static_cast<int>(this->lastReceivedDataCollection.size())) {
-      const std::string& result = this->lastReceivedDataCollection.at(this->lastReceivedDataCollectionIndex);
+    if (this->receivedDataCollectionIndex < static_cast<int>(this->receivedDataCollection.size())) {
+      const std::string& result = this->receivedDataCollection.at(this->receivedDataCollectionIndex);
       return result;
     } else {
       static const std::string emptyStr;
@@ -37,8 +37,8 @@ public:
   }
   bool
   Receive() {
-    if (this->lastReceivedDataCollectionIndex < static_cast<int>(this->lastReceivedDataCollection.size())) {
-      ++this->lastReceivedDataCollectionIndex;
+    if (this->receivedDataCollectionIndex < static_cast<int>(this->receivedDataCollection.size())) {
+      ++this->receivedDataCollectionIndex;
     }
     return true;
   }
@@ -48,8 +48,8 @@ public:
     return true;
   }
   std::string sentData;
-  std::vector<const std::string> lastReceivedDataCollection;
-  int lastReceivedDataCollectionIndex;
+  std::vector<const std::string> receivedDataCollection;
+  int receivedDataCollectionIndex;
   bool isClosed;
 };
 
@@ -79,7 +79,7 @@ class MockSession : public ISession,
                     private boost::noncopyable {
 public:
   MockSession(std::shared_ptr<ITransportClient> transportClient)
-    : transportClient(transportClient), lastReceivedDataCollectionIndex(-1), isClosed(false) {
+    : transportClient(transportClient), receivedDataCollectionIndex(-1), isClosed(false) {
   }
   void
   Close() throw() {
@@ -87,8 +87,8 @@ public:
   }
   const std::string&
   GetLastReceivedData() const {
-    if (this->lastReceivedDataCollectionIndex < static_cast<int>(this->lastReceivedDataCollection.size())) {
-      const std::string& result = this->lastReceivedDataCollection.at(this->lastReceivedDataCollectionIndex);
+    if (this->receivedDataCollectionIndex < static_cast<int>(this->receivedDataCollection.size())) {
+      const std::string& result = this->receivedDataCollection.at(this->receivedDataCollectionIndex);
       return result;
     } else {
       static const std::string emptyStr;
@@ -97,20 +97,20 @@ public:
   }
   bool
   Receive() {
-    if (this->lastReceivedDataCollectionIndex < static_cast<int>(this->lastReceivedDataCollection.size())) {
-      ++this->lastReceivedDataCollectionIndex;
+    if (this->receivedDataCollectionIndex < static_cast<int>(this->receivedDataCollection.size())) {
+      ++this->receivedDataCollectionIndex;
     }
     return true;
   }
   bool
   Send(const std::string& data) {
-    this->sentData.append(data);
+    this->sentDataCollection.push_back(data);
     return true;
   }
   const std::shared_ptr<ITransportClient> transportClient;
-  std::string sentData;
-  std::vector<const std::string> lastReceivedDataCollection;
-  int lastReceivedDataCollectionIndex;
+  std::vector<const std::string> sentDataCollection;
+  std::vector<const std::string> receivedDataCollection;
+  int receivedDataCollectionIndex;
   bool isClosed;
 };
 
