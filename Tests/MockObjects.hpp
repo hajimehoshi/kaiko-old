@@ -37,6 +37,9 @@ public:
   }
   bool
   Receive() {
+    if (this->isClosed) {
+      return false;
+    }
     if (this->receivedDataCollectionIndex < static_cast<int>(this->receivedDataCollection.size())) {
       ++this->receivedDataCollectionIndex;
     }
@@ -44,6 +47,9 @@ public:
   }
   bool
   Send(const std::string& data) {
+    if (this->isClosed) {
+      return false;
+    }
     this->sentData.append(data);
     return true;
   }
@@ -61,7 +67,10 @@ public:
   }
   bool
   Accept() {
-    return this->lastAcceptedClient;
+    if (this->isClosed) {
+      return false;
+    }
+    return true;
   }
   void
   Close() throw() {
@@ -78,7 +87,7 @@ public:
 class MockSession : public ISession,
                     private boost::noncopyable {
 public:
-  MockSession(std::shared_ptr<ITransportClient> transportClient)
+  explicit MockSession(const std::shared_ptr<ITransportClient>& transportClient)
     : transportClient(transportClient), receivedDataCollectionIndex(-1), isClosed(false) {
   }
   void
@@ -97,6 +106,9 @@ public:
   }
   bool
   Receive() {
+    if (this->isClosed) {
+      return false;
+    }
     if (this->receivedDataCollectionIndex < static_cast<int>(this->receivedDataCollection.size())) {
       ++this->receivedDataCollectionIndex;
     }
@@ -104,6 +116,9 @@ public:
   }
   bool
   Send(const std::string& data) {
+    if (this->isClosed) {
+      return false;
+    }
     this->sentDataCollection.push_back(data);
     return true;
   }
@@ -119,8 +134,9 @@ class MockSessionFactory : public ISessionFactory,
 public:
   std::shared_ptr<IPC::ISession>
   Create(const std::shared_ptr<ITransportClient>& transportClient) {
-    return std::shared_ptr<IPC::ISession>(new MockSession(transportClient));
+    return this->lastCreatedSession = std::shared_ptr<IPC::ISession>(new MockSession(transportClient));
   }
+  std::shared_ptr<IPC::ISession> lastCreatedSession;
 };
 
 }

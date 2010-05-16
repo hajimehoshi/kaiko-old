@@ -14,7 +14,7 @@ namespace IPC {
 class SimpleSession : public ISession,
                       private boost::noncopyable {
 public:
-  explicit SimpleSession(std::shared_ptr<ITransportClient> transportClient);
+  explicit SimpleSession(const std::shared_ptr<ITransportClient>& transportClient);
   ~SimpleSession() throw();
   void Close() throw();
   const std::string& GetLastReceivedData() const;

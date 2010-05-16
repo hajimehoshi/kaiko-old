@@ -45,7 +45,7 @@ StorageServer::Execute() {
   }
   auto it = this->pimpl->sessions.begin();
   while (it != this->pimpl->sessions.end()) {
-    std::shared_ptr<IPC::ISession> session = *it;
+    const std::shared_ptr<IPC::ISession>& session = *it;
     if (!session->Receive()) {
       session->Close();
       it = this->pimpl->sessions.erase(it);

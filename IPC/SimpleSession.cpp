@@ -17,7 +17,7 @@ enum ReceivingState {
 };
 
 struct SimpleSession::Impl {
-  explicit Impl(std::shared_ptr<ITransportClient> transportClient)
+  explicit Impl(const std::shared_ptr<ITransportClient>& transportClient)
     : transportClient(transportClient),
       receivingState(ReceivingStateInit),
       isActive(true),
@@ -37,7 +37,7 @@ struct SimpleSession::Impl {
   int restLengthToRead;
 };
 
-SimpleSession::SimpleSession(std::shared_ptr<ITransportClient> transportClient)
+SimpleSession::SimpleSession(const std::shared_ptr<ITransportClient>& transportClient)
   : pimpl(new Impl(transportClient)) {
 }
 
