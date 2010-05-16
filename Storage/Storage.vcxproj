@@ -73,6 +73,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="IStorageMessageProcessor.hpp" />
     <ClInclude Include="StorageServer.hpp" />
   </ItemGroup>
   <ItemGroup>

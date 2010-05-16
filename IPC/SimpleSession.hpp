@@ -16,10 +16,11 @@ class SimpleSession : public ISession,
 public:
   explicit SimpleSession(const std::shared_ptr<ITransportClient>& transportClient);
   ~SimpleSession() throw();
+  void AddDataToSend(const std::string& data);
   void Close() throw();
   const std::string& GetLastReceivedData() const;
   bool Receive();
-  bool Send(const std::string& data);
+  bool Send();
 private:
   struct Impl;
   const std::unique_ptr<Impl> pimpl;

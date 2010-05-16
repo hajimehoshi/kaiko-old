@@ -14,14 +14,16 @@ BOOST_AUTO_TEST_CASE(IPC_SimpleSession_Send) {
     // empty
     const std::shared_ptr<IPC::MockTransportClient> transportClient(new IPC::MockTransportClient());
     SimpleSession session(transportClient);
-    BOOST_CHECK_EQUAL(true, session.Send(""));
+    session.AddDataToSend("");
+    BOOST_CHECK_EQUAL(true, session.Send());
     BOOST_CHECK_EQUAL(true, transportClient->sentData.empty());
   }
   {
     const std::shared_ptr<IPC::MockTransportClient> transportClient(new IPC::MockTransportClient());
     SimpleSession session(transportClient);
     const std::string data = std::string(127, 'a');
-    BOOST_CHECK_EQUAL(true, session.Send(data));
+    session.AddDataToSend(data);
+    BOOST_CHECK_EQUAL(true, session.Send());
     BOOST_CHECK_EQUAL('\x80', transportClient->sentData.at(0));
     BOOST_CHECK_EQUAL('\x7f', transportClient->sentData.at(1));
     BOOST_CHECK_EQUAL(data, transportClient->sentData.substr(2));
@@ -30,7 +32,8 @@ BOOST_AUTO_TEST_CASE(IPC_SimpleSession_Send) {
     const std::shared_ptr<IPC::MockTransportClient> transportClient(new IPC::MockTransportClient());
     SimpleSession session(transportClient);
     const std::string data = std::string(128, 'a');
-    BOOST_CHECK_EQUAL(true, session.Send(data));
+    session.AddDataToSend(data);
+    BOOST_CHECK_EQUAL(true, session.Send());
     BOOST_CHECK_EQUAL('\x80', transportClient->sentData.at(0));
     BOOST_CHECK_EQUAL('\x81', transportClient->sentData.at(1));
     BOOST_CHECK_EQUAL('\x00', transportClient->sentData.at(2));
@@ -40,7 +43,8 @@ BOOST_AUTO_TEST_CASE(IPC_SimpleSession_Send) {
     const std::shared_ptr<IPC::MockTransportClient> transportClient(new IPC::MockTransportClient());
     SimpleSession session(transportClient);
     const std::string data = std::string(129, 'a');
-    BOOST_CHECK_EQUAL(true, session.Send(data));
+    session.AddDataToSend(data);
+    BOOST_CHECK_EQUAL(true, session.Send());
     BOOST_CHECK_EQUAL('\x80', transportClient->sentData.at(0));
     BOOST_CHECK_EQUAL('\x81', transportClient->sentData.at(1));
     BOOST_CHECK_EQUAL('\x01', transportClient->sentData.at(2));
@@ -50,7 +54,8 @@ BOOST_AUTO_TEST_CASE(IPC_SimpleSession_Send) {
     const std::shared_ptr<IPC::MockTransportClient> transportClient(new IPC::MockTransportClient());
     SimpleSession session(transportClient);
     const std::string data = std::string(200, 'a');
-    BOOST_CHECK_EQUAL(true, session.Send(data));
+    session.AddDataToSend(data);
+    BOOST_CHECK_EQUAL(true, session.Send());
     BOOST_CHECK_EQUAL('\x80', transportClient->sentData.at(0));
     BOOST_CHECK_EQUAL('\x81', transportClient->sentData.at(1));
     BOOST_CHECK_EQUAL('\x48', transportClient->sentData.at(2));
@@ -60,7 +65,8 @@ BOOST_AUTO_TEST_CASE(IPC_SimpleSession_Send) {
     const std::shared_ptr<IPC::MockTransportClient> transportClient(new IPC::MockTransportClient());
     SimpleSession session(transportClient);
     const std::string data = std::string(314159, 'a');
-    BOOST_CHECK_EQUAL(true, session.Send(data));
+    session.AddDataToSend(data);
+    BOOST_CHECK_EQUAL(true, session.Send());
     BOOST_CHECK_EQUAL('\x80', transportClient->sentData.at(0));
     BOOST_CHECK_EQUAL('\x93', transportClient->sentData.at(1));
     BOOST_CHECK_EQUAL('\x96', transportClient->sentData.at(2));
@@ -73,8 +79,9 @@ BOOST_AUTO_TEST_CASE(IPC_SimpleSession_SendContinuously) {
   {
     const std::shared_ptr<IPC::MockTransportClient> transportClient(new IPC::MockTransportClient());
     SimpleSession session(transportClient);
-    BOOST_CHECK_EQUAL(true, session.Send("foo"));
-    BOOST_CHECK_EQUAL(true, session.Send("barbaz"));
+    session.AddDataToSend("foo");
+    session.AddDataToSend("barbaz");
+    BOOST_CHECK_EQUAL(true, session.Send());
     BOOST_CHECK_EQUAL('\x80', transportClient->sentData.at(0));
     BOOST_CHECK_EQUAL('\x03', transportClient->sentData.at(1));
     BOOST_CHECK_EQUAL("foo",  transportClient->sentData.substr(2, 3));

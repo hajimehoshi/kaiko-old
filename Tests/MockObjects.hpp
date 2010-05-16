@@ -5,6 +5,7 @@
 #include "../IPC/ISessionFactory.hpp"
 #include "../IPC/ITransportClient.hpp"
 #include "../IPC/ITransportServer.hpp"
+#include "../Storage/IStorageMessageProcessor.hpp"
 
 #include <vector>
 
@@ -13,9 +14,7 @@ namespace Tests {
 
 namespace IPC {
 
-using namespace Kaiko::IPC;
-
-class MockTransportClient : public ITransportClient,
+class MockTransportClient : public Kaiko::IPC::ITransportClient,
                             private boost::noncopyable {
 public:
   MockTransportClient()
@@ -59,7 +58,7 @@ public:
   bool isClosed;
 };
 
-class MockTransportServer : public ITransportServer,
+class MockTransportServer : public Kaiko::IPC::ITransportServer,
                             private boost::noncopyable {
 public:
   MockTransportServer()
@@ -76,19 +75,22 @@ public:
   Close() throw() {
     this->isClosed = true;
   }
-  const std::shared_ptr<IPC::ITransportClient>&
+  const std::shared_ptr<Kaiko::IPC::ITransportClient>&
   GetLastAcceptedClient() const {
     return this->lastAcceptedClient;
   }
   bool isClosed;
-  std::shared_ptr<IPC::ITransportClient> lastAcceptedClient;
+  std::shared_ptr<Kaiko::IPC::ITransportClient> lastAcceptedClient;
 };
 
-class MockSession : public ISession,
+class MockSession : public Kaiko::IPC::ISession,
                     private boost::noncopyable {
 public:
-  explicit MockSession(const std::shared_ptr<ITransportClient>& transportClient)
+  explicit MockSession(const std::shared_ptr<Kaiko::IPC::ITransportClient>& transportClient)
     : transportClient(transportClient), receivedDataCollectionIndex(-1), isClosed(false) {
+  }
+  void
+  AddDataToSend(const std::string& data) {
   }
   void
   Close() throw() {
@@ -115,28 +117,41 @@ public:
     return true;
   }
   bool
-  Send(const std::string& data) {
+  Send() {
     if (this->isClosed) {
       return false;
     }
-    this->sentDataCollection.push_back(data);
+    //this->sentDataCollection.push_back(data);
     return true;
   }
-  const std::shared_ptr<ITransportClient> transportClient;
+  const std::shared_ptr<Kaiko::IPC::ITransportClient> transportClient;
   std::vector<const std::string> sentDataCollection;
   std::vector<const std::string> receivedDataCollection;
   int receivedDataCollectionIndex;
   bool isClosed;
 };
 
-class MockSessionFactory : public ISessionFactory,
+class MockSessionFactory : public Kaiko::IPC::ISessionFactory,
                            private boost::noncopyable {
 public:
-  std::shared_ptr<IPC::ISession>
-  Create(const std::shared_ptr<ITransportClient>& transportClient) {
-    return this->lastCreatedSession = std::shared_ptr<IPC::ISession>(new MockSession(transportClient));
+  std::shared_ptr<Kaiko::IPC::ISession>
+  Create(const std::shared_ptr<Kaiko::IPC::ITransportClient>& transportClient) {
+    return this->lastCreatedSession = std::shared_ptr<Kaiko::IPC::ISession>(new MockSession(transportClient));
   }
-  std::shared_ptr<IPC::ISession> lastCreatedSession;
+  std::shared_ptr<Kaiko::IPC::ISession> lastCreatedSession;
+};
+
+}
+
+namespace Storage {
+
+class MockStorageMessageProcessor : public Kaiko::Storage::IStorageMessageProcessor,
+                                    private boost::noncopyable {
+public:
+  bool
+  Process(const std::string&) {
+    return true;
+  }
 };
 
 }

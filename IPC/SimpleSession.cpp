@@ -5,6 +5,7 @@
 
 #include <cassert>
 #include <deque>
+#include <vector>
 
 namespace Kaiko {
 namespace IPC {
@@ -25,11 +26,13 @@ struct SimpleSession::Impl {
   }
   void Inactivate() {
     this->transportClient->Close();
+    this->dataCollectionToSend.clear();
     this->lastReceivedData.clear();
     this->isActive = false;
     this->receivingState = ReceivingStateTerminated;
   }
   std::shared_ptr<ITransportClient> transportClient;
+  std::vector<const std::string> dataCollectionToSend;
   std::deque<char> bufferedChars;
   bool isActive;
   ReceivingState receivingState;
@@ -43,6 +46,11 @@ SimpleSession::SimpleSession(const std::shared_ptr<ITransportClient>& transportC
 
 SimpleSession::~SimpleSession() throw() {
   this->Close();
+}
+
+void
+SimpleSession::AddDataToSend(const std::string& data) {
+  this->pimpl->dataCollectionToSend.push_back(data);
 }
 
 void
@@ -154,29 +162,36 @@ SimpleSession::Receive() {
 }
 
 bool
-SimpleSession::Send(const std::string& data) {
+SimpleSession::Send() {
   if (!this->pimpl->isActive) {
     return false;
   }
-  if (data.empty()) {
-    return true;
-  }
-  int size = data.size();
-  if (size <= 0) {
-    throw Util::Exception(__FILE__, __LINE__, "data size is too big");
-  }
-  const std::string lengthPart = Util::Serialization::LengthToBytes(size);
-  try {
-    if (this->pimpl->transportClient->Send("\x80") &&
-        this->pimpl->transportClient->Send(lengthPart) &&
-        this->pimpl->transportClient->Send(data)) {
-      return true;
+  for (auto it = this->pimpl->dataCollectionToSend.begin();
+       it != this->pimpl->dataCollectionToSend.end();
+       ++it) {
+    const std::string& data = *it;
+    if (data.empty()) {
+      continue;
     }
-  } catch (const Util::SystemException&) {
-    // TODO: logging
+    int size = data.size();
+    if (size <= 0) {
+      throw Util::Exception(__FILE__, __LINE__, "data size is too big");
+    }
+    const std::string lengthPart = Util::Serialization::LengthToBytes(size);
+    try {
+      if (this->pimpl->transportClient->Send("\x80") &&
+          this->pimpl->transportClient->Send(lengthPart) &&
+          this->pimpl->transportClient->Send(data)) {
+        continue;
+      }
+    } catch (const Util::SystemException&) {
+      // TODO: logging
+    }
+    this->pimpl->Inactivate();
+    return false;
   }
-  this->pimpl->Inactivate();
-  return false;
+  this->pimpl->dataCollectionToSend.clear();
+  return true;
 }
 
 }

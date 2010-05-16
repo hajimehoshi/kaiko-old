@@ -12,8 +12,9 @@ BOOST_AUTO_TEST_CASE(Storage_StorageServer_Execute) {
   {
     const std::shared_ptr<IPC::MockTransportServer> transportServer(new IPC::MockTransportServer());
     const std::shared_ptr<IPC::MockSessionFactory> sessionFactory(new IPC::MockSessionFactory());
+    const std::shared_ptr<Storage::MockStorageMessageProcessor> storageMessageProcessor(new Storage::MockStorageMessageProcessor());
     const std::shared_ptr<IPC::MockTransportClient> transportClient(new IPC::MockTransportClient());
-    StorageServer storageServer(transportServer, sessionFactory);
+    StorageServer storageServer(transportServer, sessionFactory, storageMessageProcessor);
     transportServer->lastAcceptedClient = transportClient;
     BOOST_CHECK_EQUAL(true, storageServer.Execute());
     transportServer->lastAcceptedClient.reset();

@@ -9,10 +9,11 @@ namespace IPC {
 class ISession {
 public:
   virtual ~ISession() { }
+  virtual void AddDataToSend(const std::string& data) = 0;
   virtual void Close() throw() = 0;
   virtual const std::string& GetLastReceivedData() const = 0;
   virtual bool Receive() = 0;
-  virtual bool Send(const std::string& data) = 0;
+  virtual bool Send() = 0;
 };
 
 }
