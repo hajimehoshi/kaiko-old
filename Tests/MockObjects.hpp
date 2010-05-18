@@ -5,7 +5,6 @@
 #include "../IPC/ISessionFactory.hpp"
 #include "../IPC/ITransportClient.hpp"
 #include "../IPC/ITransportServer.hpp"
-#include "../Storage/IStorageMessageProcessor.hpp"
 
 #include <vector>
 
@@ -139,18 +138,6 @@ public:
     return this->lastCreatedSession = std::shared_ptr<Kaiko::IPC::ISession>(new MockSession(transportClient));
   }
   std::shared_ptr<Kaiko::IPC::ISession> lastCreatedSession;
-};
-
-}
-
-namespace Storage {
-
-class MockStorageMessageProcessor : public Kaiko::Storage::IStorageMessageProcessor,
-                                    private boost::noncopyable {
-public:
-  void
-  Process(const std::shared_ptr<Kaiko::IPC::ISession>&) {
-  }
 };
 
 }

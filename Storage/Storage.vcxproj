@@ -72,13 +72,6 @@
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="IStorageMessageProcessor.hpp" />
-    <ClInclude Include="StorageServer.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="StorageServer.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
