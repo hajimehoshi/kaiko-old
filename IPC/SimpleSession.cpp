@@ -44,7 +44,7 @@ SimpleSession::SimpleSession(const std::shared_ptr<ITransportClient>& transportC
   : pimpl(new Impl(transportClient)) {
 }
 
-SimpleSession::~SimpleSession() throw() {
+SimpleSession::~SimpleSession() {
   this->Close();
 }
 
@@ -54,7 +54,7 @@ SimpleSession::AddDataToSend(const std::string& data) {
 }
 
 void
-SimpleSession::Close() throw() {
+SimpleSession::Close() {
   this->pimpl->Inactivate();
 }
 

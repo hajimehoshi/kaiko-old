@@ -38,7 +38,7 @@ SocketServer::SocketServer(int port)
   : pimpl(new Impl(port)) {
 }
 
-SocketServer::~SocketServer() throw() {
+SocketServer::~SocketServer() {
   this->Close();
 }
 
@@ -63,7 +63,7 @@ SocketServer::Accept() {
 }
 
 void
-SocketServer::Close() throw() {
+SocketServer::Close() {
   if (this->pimpl->socket != INVALID_SOCKET) {
     ::shutdown(this->pimpl->socket, SD_BOTH);
     ::closesocket(this->pimpl->socket);

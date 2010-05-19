@@ -16,8 +16,8 @@ class SocketClient : public ITransportClient,
 public:
   SocketClient(const std::string& ip, int port);
   explicit SocketClient(SOCKET socket);
-  ~SocketClient() throw();
-  void Close() throw();
+  ~SocketClient();
+  void Close();
   const std::string& GetLastReceivedData() const;
   bool Receive();
   bool Send(const std::string&);

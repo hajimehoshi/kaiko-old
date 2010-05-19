@@ -12,7 +12,7 @@ class Exception : public std::exception {
 public:
   Exception(const std::string& file, int line);
   Exception(const std::string& file, int line, const std::string& message);
-  virtual ~Exception() throw();
+  virtual ~Exception();
   virtual const std::string& What() const;
   virtual const char* what() const;
 public:

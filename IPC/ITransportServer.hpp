@@ -12,7 +12,7 @@ class ITransportServer {
 public:
   virtual ~ITransportServer() { }
   virtual bool Accept() = 0;
-  virtual void Close() throw() = 0;
+  virtual void Close() = 0;
   virtual const std::shared_ptr<ITransportClient>& GetLastAcceptedClient() const = 0;
 };
 

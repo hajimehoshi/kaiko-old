@@ -14,7 +14,7 @@ SocketEnvironment::SocketEnvironment() {
   }
 }
 
-SocketEnvironment::~SocketEnvironment() throw() {
+SocketEnvironment::~SocketEnvironment() {
   ::WSACleanup();
 }
 

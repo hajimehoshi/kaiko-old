@@ -26,7 +26,7 @@ Server::Server(const std::shared_ptr<ITransportServer>& transportServer,
   : pimpl(new Impl(transportServer, sessionFactory)) {
 }
 
-Server::~Server() throw() {
+Server::~Server() {
 }
 
 bool

@@ -15,9 +15,9 @@ class SocketServer : public ITransportServer,
 public:
   SocketServer();
   explicit SocketServer(int port);
-  ~SocketServer() throw();
+  ~SocketServer();
   bool Accept();
-  void Close() throw();
+  void Close();
   const std::shared_ptr<ITransportClient>& GetLastAcceptedClient() const;
   int GetPort() const;
 private:

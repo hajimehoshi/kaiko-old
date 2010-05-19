@@ -57,7 +57,7 @@ SystemException::SystemException(const std::string& file, int line, int errorNo)
   : Exception(file, line, ErrorNoToMessage(errorNo)), pimpl(new Impl(errorNo)) {
 }
 
-SystemException::~SystemException() throw() {
+SystemException::~SystemException() {
 }
 
 int

@@ -31,7 +31,7 @@ Exception::Exception(const std::string& file, int line, const std::string& messa
   : exception(), pimpl(new Impl(FormatErrorMessage(file, line, message))) {
 }
 
-Exception::~Exception() throw() {
+Exception::~Exception() {
 }
 
 const std::string&

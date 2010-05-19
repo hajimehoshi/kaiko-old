@@ -9,7 +9,7 @@ namespace IPC {
 class SocketException : public Util::SystemException {
 public:
   SocketException(const std::string& file, int line);
-  virtual ~SocketException() throw();
+  virtual ~SocketException();
 };
 
 }

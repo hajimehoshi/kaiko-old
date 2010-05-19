@@ -20,7 +20,7 @@ public:
     : receivedDataCollectionIndex(-1), isClosed(false) {
   }
   void
-  Close() throw() {
+  Close() {
     this->isClosed = true;
   }
   const std::string&
@@ -71,7 +71,7 @@ public:
     return true;
   }
   void
-  Close() throw() {
+  Close() {
     this->isClosed = true;
   }
   const std::shared_ptr<Kaiko::IPC::ITransportClient>&
@@ -92,7 +92,7 @@ public:
   AddDataToSend(const std::string&) {
   }
   void
-  Close() throw() {
+  Close() {
     this->isClosed = true;
   }
   const std::string&

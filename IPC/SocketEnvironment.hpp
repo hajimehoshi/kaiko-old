@@ -9,7 +9,7 @@ namespace IPC {
 class SocketEnvironment : private boost::noncopyable {
 public:
   SocketEnvironment();
-  ~SocketEnvironment() throw();
+  ~SocketEnvironment();
 };
 
 }

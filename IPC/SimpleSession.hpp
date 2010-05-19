@@ -15,9 +15,9 @@ class SimpleSession : public ISession,
                       private boost::noncopyable {
 public:
   explicit SimpleSession(const std::shared_ptr<ITransportClient>& transportClient);
-  ~SimpleSession() throw();
+  ~SimpleSession();
   void AddDataToSend(const std::string& data);
-  void Close() throw();
+  void Close();
   const std::string& GetLastReceivedData() const;
   bool Receive();
   bool Send();

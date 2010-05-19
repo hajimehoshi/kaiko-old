@@ -32,12 +32,12 @@ SocketClient::SocketClient(SOCKET socket)
   : pimpl(new Impl(socket)) {
 }
 
-SocketClient::~SocketClient() throw() {
+SocketClient::~SocketClient() {
   this->Close();
 }
 
 void
-SocketClient::Close() throw() {
+SocketClient::Close() {
   if (this->pimpl->socket != INVALID_SOCKET) {
     ::shutdown(this->pimpl->socket, SD_BOTH);
     ::closesocket(this->pimpl->socket);

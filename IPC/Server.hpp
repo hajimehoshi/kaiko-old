@@ -14,7 +14,7 @@ class Server : private boost::noncopyable {
 public:
   Server(const std::shared_ptr<ITransportServer>& transportServer,
          const std::shared_ptr<ISessionFactory>& sessionFactory);
-  ~Server() throw();
+  ~Server();
   bool Process();
 private:
   struct Impl;
