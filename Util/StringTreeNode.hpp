@@ -16,7 +16,7 @@ public:
   explicit StringTreeNode(const std::string& key);
   ~StringTreeNode();
   void AddChildNode(const std::string& key);
-  const Nodes GetChildNodes() const;
+  const Nodes& GetChildNodes() const;
   const std::string& GetKey() const;
   std::string ToString() const;
 private:

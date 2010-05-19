@@ -90,7 +90,7 @@ StringTreeNode::AddChildNode(const std::string& key) {
   this->pimpl->childNodes.push_back(childNode);
 }
 
-const StringTreeNode::Nodes
+const StringTreeNode::Nodes&
 StringTreeNode::GetChildNodes() const {
   return this->pimpl->childNodes;
 }
